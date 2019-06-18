@@ -1,0 +1,30 @@
+.buttoncontainer{
+	text-align: right;
+	margin-top: 20px;
+}
+#cancel{
+	background-color: hsl(0, 100%, 45%);
+	margin-right: 5px;
+}
+#cancel:hover{
+	background-color: hsl(0, 100%, 50%);
+}
+#clubname{
+	width: 300px;
+}
+#editform {
+	margin: 40px;
+	font-size: 1.2em;
+}
+.ql-container {
+	min-height: 200px;
+	font-family: var(--body-font);
+}
+.ql-picker-label::before{
+	font-family: var(--body-font);
+}
+.textinput{
+	margin-bottom: 20px;
+	padding: 3px;
+	font-size: 0.8em;
+}

@@ -1,0 +1,13 @@
+.clubcontainer{
+	margin: 10px;
+	border: 1px solid hsl(0, 0%, 75%);
+	padding: 30px;
+	text-align: center;
+	font-size: 1.5em;
+	background-color: hsl(0, 0%, 95%);
+	height: 600px;
+}
+h2{
+	font-family: var(--title-font);
+	text-align: center;
+}

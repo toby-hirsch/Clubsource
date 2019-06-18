@@ -1,0 +1,22 @@
+extends layout
+
+block variables
+	- title = 'Dashboard'
+	
+append styles
+	link(rel='stylesheet' href='/stylesheets/clubs.css' type='text/css')
+
+append content
+	.row.no-gutters
+		.col-lg
+			h2 Your Page
+			.clubcontainer
+				p You have not created your club's page yet.
+				a(href='dashboard/edit')
+					button.bigbutton Create page
+		.col-lg
+			h2 Engagement
+			.clubcontainer
+				p Once you create a club, you will be able to see its engagement statistics here
+
+		
