@@ -6,21 +6,55 @@ block variables
 append styles
 	link(href="https://cdn.quilljs.com/1.3.6/quill.snow.css", rel="stylesheet")
 	link(href='/stylesheets/clubedit.css', rel='stylesheet')
+	link(href='https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap2.css', rel='stylesheet')
 	
 append content
-	form#editform(action='publish', method='post')
-		label(for='clubname') Club Name
+	if (error)
+		.errormessage #{error}
+	form#editform(action='edit', method='post')
+		
+		label(for='name') Club Name
 		br
 		input.textinput#clubname(type='text' name='clubname')
-		#editor.textinput
-			p Default text
+		br
+	
+		label(for='username') Club Username
+			p This will be used as a unique identifier for you club. Users will see it under your club name.
+		br
+		input.textinput#username(type='text' name='username')
+		br
+	
+		label(for='officers') Club Officers
+		br
+		input#officers(name='officers' rows=4)
+		br
+	
+		label(for='meetingdates') Meeting Dates
+		br
+		textarea#meetingdates.textinput(name='meetingdates' form='editform' rows=2)
+		br
+		
+		
+		
+		label Description
+		#editor
+		input#dummydescription(type='hidden' name='description')
+		
+		label(for='tags') Tags
+		input#selectize(name='tags')
+		
+		//TODO: add a meeting dates option
+		//TODO: add an email list capability, where users can upload a CSV with emails or add emails manually with a Selectize box
+		
 		.buttoncontainer
 			button#cancel.bigbutton Cancel
 			button#publishclub.bigbutton(type='submit') Publish Changes
 			//TODO (long term): Offer a "preview changes" option before publishing changes
-		input#dummydescription(type='hidden' name='description')
-			
-	
+		
 append scripts
 	script(src="https://cdn.quilljs.com/1.3.6/quill.js")
+	script(src='https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.js')
 	script(src='/javascripts/clubedit.js')
+	if (formData)
+		script.
+			restoreFormData(!{formData});

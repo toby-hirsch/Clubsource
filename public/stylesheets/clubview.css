@@ -1,0 +1,17 @@
+.info{
+	margin: 50px;
+	padding: 20px;
+	background-color: hsl(0, 0%, 95%);
+	border: 1px solid hsl(0, 0%, 25%);
+	border-radius: 10px;
+}
+.username{
+	color: hsl(0, 0%, 60%);
+	text-align: center;
+}
+.quillcontent{
+	font-size: 1.2em;
+}
+.title{
+	margin-bottom: 15px;
+}

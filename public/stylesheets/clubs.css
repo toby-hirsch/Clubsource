@@ -3,9 +3,26 @@
 	border: 1px solid hsl(0, 0%, 75%);
 	padding: 30px;
 	text-align: center;
-	font-size: 1.5em;
 	background-color: hsl(0, 0%, 95%);
-	height: 600px;
+	font-size: 1.2em;
+	height: 450px;
+	overflow: hidden;
+	position: relative;
+}
+.clubcontainer::after{
+	content: '...';
+	position: absolute;
+	bottom: 0px;
+	color: hsl(0, 0%, 50%);
+}
+.clubcontainer p{
+	margin-bottom: 0;
+}
+.leftbutton{
+	margin-right: 10px;
+}
+.quillcontent{
+	text-align: left;
 }
 h2{
 	font-family: var(--title-font);

@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
 	res.render('index', { title: 'Express' });
 });
 
-router.get('/search', function(req, res, next) {
+router.get('/clubs(/*)?', function(req, res) {
 	res.sendFile(path.join(__dirname, '../public', 'app.html'));
 });
 

@@ -1,0 +1,15 @@
+extends layout
+
+block variables
+	- var title = clubname
+	- var pathToHome = '../'
+
+append styles
+	link(rel='stylesheet', href='/stylesheets/clubview.css') 
+	
+append content
+	p.username= username
+	.info
+		p.gray= 'Tags: ' + tags
+		hr
+		.quillcontent !{description}

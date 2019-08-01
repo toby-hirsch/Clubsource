@@ -7,16 +7,45 @@ append styles
 	link(rel='stylesheet' href='/stylesheets/clubs.css' type='text/css')
 
 append content
+	- console.log(club);
 	.row.no-gutters
 		.col-lg
 			h2 Your Page
-			.clubcontainer
-				p You have not created your club's page yet.
-				a(href='dashboard/edit')
-					button.bigbutton Create page
+			if (club)
+				- var clubobj = JSON.parse(club);
+				.text-center
+					a(href='dashboard/edit')
+						button.bigbutton.leftbutton Edit
+					a(href='../clubs/' + clubobj.username)
+						button.bigbutton View
 		.col-lg
 			h2 Engagement
-			.clubcontainer
-				p Once you create a club, you will be able to see its engagement statistics here
-
-		
+			if (club)
+				.text-center
+						a(href='dashboard/engagement')
+							button.bigbutton See More
+				
+	.row.no-gutters
+		.col-lg
+			if (!club)
+				.clubcontainer
+					p You have not created a page for your club yet.
+					a(href='dashboard/edit')
+						button.bigbutton Create page
+				
+			else
+				.clubcontainer
+					h1= clubobj.name
+					p.gray.shrink= clubobj.username
+					p.gray.shrink= 'Tags: ' + clubobj.tags.replace(/,/g, ', ')
+					p.gray.shrink= 'Officers: ' + clubobj.officers.replace(/,/g, ', ')
+					p.gray.shrink= 'Meeting dates: ' + clubobj.meetingdates
+					hr
+					.quillcontent !{clubobj.description}
+		.col-lg
+			if (!club)
+				.clubcontainer
+					p Once you create a club, you will be able to see its engagement statistics here
+			else
+				.clubcontainer
+					p Engagement statistics:

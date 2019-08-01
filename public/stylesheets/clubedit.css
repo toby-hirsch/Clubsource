@@ -9,12 +9,25 @@
 #cancel:hover{
 	background-color: hsl(0, 100%, 50%);
 }
-#clubname{
-	width: 300px;
-}
 #editform {
 	margin: 40px;
 	font-size: 1.2em;
+}
+#editor{
+	margin-bottom: 20px;
+	padding: 3px;
+	font-size: 0.8em;
+}
+.errormessage{
+	text-align: center;
+	background-color: hsl(0, 50%, 90%);
+	padding: 20px;
+}
+label p{
+	color: hsl(0, 0%, 60%);
+	font-size: 0.8em;
+	font-style: italic;
+	margin-bottom: 0;
 }
 .ql-container {
 	min-height: 200px;
@@ -27,4 +40,5 @@
 	margin-bottom: 20px;
 	padding: 3px;
 	font-size: 0.8em;
+	width: 300px;
 }

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600|Open+Sans:400,600'); /*Change this to eliminate all the unused Montserrat thicknesses*/
+@import url('https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600|Open+Sans:400,400i,600'); /*Change this to eliminate all the unused Montserrat thicknesses*/
 .bigbutton{
 	background-color: hsl(195, 100%, 35%);
 	border: none;
@@ -11,16 +11,27 @@
 .bigbutton:hover{
 	background-color: hsl(195, 100%, 30%);
 }
+.bigbutton:focus{
+	outline: none;
+}
+.bigbutton:active{
+	background-color: hsl(195, 100%, 25%);
+	transition: none;
+}
 body{
 	font-family: Open Sans, Montserrat, sans serif;
 	--title-font: Montserrat, Open Sans, sans serif;
 	--body-font: Open Sans, Montserrat, sans serif;
+}
+.gray{
+	color: hsl(0, 0%, 50%);
 }
 .navbar{
 	height: 80px;
 	border-bottom: 1px solid hsl(0, 0%, 75%);
 	text-align: right;
 	margin-bottom: 80px;
+	position: relative;
 }
 .navcont{
 	display: inline-block;
@@ -62,7 +73,9 @@ body{
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
 }
-
+.shrink{
+	font-size: 0.7em;
+}
 .title{
 	text-align: center;
 	font-family: var(--title-font);

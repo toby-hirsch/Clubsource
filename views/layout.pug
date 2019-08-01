@@ -13,12 +13,13 @@ html(lang='en')
 			link(rel='stylesheet', href='/stylesheets/body.css', type='text/css')
 	body
 		block content
-			.navbar.position-relative
+			.navbar
 				.navcont.navleft
-					a.mainlogonav(href='../') clubsource
+					a.mainlogonav(href=pathToHome) clubsource
 				.navcont.navright
-					a.navlink(href='dashboard') Dashboard
-					a.navlink(href='search') Browse Clubs
+					a.navlink(href=pathToHome + 'dashboard') Dashboard
+					a.navlink(href=pathToHome + 'search') Browse Clubs
+					a.navlink(href=pathToHome + 'accounts/logout') Log Out
 					
 			h1.title #{title}
 			
