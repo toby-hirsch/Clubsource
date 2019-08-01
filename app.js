@@ -4,6 +4,7 @@
 //Token value: 00weFwwSEVnZ2zF6ykgKA5lpRNkUcEipIvvQ13P0MZ
 
 
+
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
@@ -15,6 +16,13 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const gauth = require('./googleauth');
 
+let baseurl = 'https://clubsource.herokuapp.com';
+
+if (process.env.NODE_ENV === 'development')
+	baseurl = 'http://localhost:3000';
+
+console.log('base url: ' + baseurl);
+
 gauth(passport);
 
 var oktaClient = new okta.Client({
@@ -25,7 +33,7 @@ const oidc = new ExpressOIDC({
   issuer: "https://dev-595998.okta.com/oauth2/default",
   client_id: '0oaqbdltip5hVE727356',
   client_secret: 'Q4xccPTsw65bTNpO3FMq_WrWqLsGdyqzCR1a1BXr',
-  redirect_uri: 'http://localhost:3000/myclub/callback',
+  redirect_uri: baseurl + '/myclub/callback',
   scope: "openid profile",
   routes: {
     login: {
