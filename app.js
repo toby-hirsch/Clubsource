@@ -99,7 +99,7 @@ if (process.env.NODE_ENV === 'development') {
 	app.use(cors());
 }
 
-app.use(function (req, res, next) { //Try removing this--might not be necessary
+/*app.use(function (req, res, next) { //Try removing this--might not be necessary
 
     // Website you wish to allow to connect
 	console.log('configuring cors');
@@ -117,7 +117,7 @@ app.use(function (req, res, next) { //Try removing this--might not be necessary
 
     // Pass to next layer of middleware
     next();
-});
+});*/
 
 mongoose.connect('mongodb+srv://admin:Toby0188@clubs-rxh79.mongodb.net/clubsource?retryWrites=true&w=majority', 
 	{useNewUrlParser: true, useFindAndModify: false, useCreateIndex: true}, function(err){
