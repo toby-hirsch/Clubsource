@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
+    "build": "cd react-spa && yarn build && cd ../ && xcopy react-spa\\build public /O /X /E /H /K && move public\\index.html public\\app.html",
     "dev": "concurrently \"NODE_ENV=development PORT=3000 nodemon\" \"cd react-spa && PORT=3001 yarn start\""
   },
   "dependencies": {
