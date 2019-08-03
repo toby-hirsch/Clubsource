@@ -24,7 +24,17 @@ var quill = new Quill('#editor', {
 	theme: 'snow',
 	placeholder: 'Describe your club...',
 	modules: {
-		toolbar: toolbar
+		toolbar: toolbar,
+		keyboard: {
+			bindings: {
+				tab: {
+					key: 9,
+					handler: function () {
+						return false;
+					}
+				}
+			}
+		}
 	}
 });
 
