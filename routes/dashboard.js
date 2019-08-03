@@ -40,6 +40,8 @@ router.post('/edit', (req, res, next) => {
 	
 	//Validate submitted data -- need to flesh this out more
 	
+	//TODO: use Object.bsonsize() to make sure that documents don't exceed 2MB
+	
 	if (!validateUsername(req.body.username)) {
 		req.body.username = '';
 		res.render('clubedit', {
