@@ -19,11 +19,13 @@ $("#username").on({
 	}
 });
 
+//Quill.register('modules/imageResize', ImageResize);
 
 var quill = new Quill('#editor', {
 	theme: 'snow',
 	placeholder: 'Describe your club...',
 	modules: {
+		imageResize: {},
 		toolbar: toolbar,
 		keyboard: {
 			bindings: {
@@ -34,7 +36,7 @@ var quill = new Quill('#editor', {
 					}
 				}
 			}
-		}
+		},
 	}
 });
 
