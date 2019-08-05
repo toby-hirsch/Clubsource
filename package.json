@@ -18,6 +18,7 @@
     "express": "~4.16.1",
     "express-generator": "^4.16.1",
     "express-session": "^1.15.6",
+    "heroku-ssl-redirect": "^0.0.4",
     "http-errors": "~1.6.3",
     "joi": "^14.3.1",
     "jsonwebtoken": "^8.5.1",
