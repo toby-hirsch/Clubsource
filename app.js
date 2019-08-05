@@ -15,6 +15,7 @@ const ExpressOIDC = require("@okta/oidc-middleware").ExpressOIDC;
 const mongoose = require('mongoose');
 const passport = require('passport');
 const gauth = require('./googleauth');
+const sslredirect = require('heroku-ssl-redirect');
 
 let baseurl = 'https://greenwich.myclubsource.com';
 
@@ -47,6 +48,8 @@ const oidc = new ExpressOIDC({
 });
 
 var app = express();
+
+app.use(sslredirect());
 
 app.use(passport.initialize());
 
