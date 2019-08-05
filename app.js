@@ -16,7 +16,7 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const gauth = require('./googleauth');
 
-let baseurl = 'https://clubsource.herokuapp.com';
+let baseurl = 'https://greenwich.myclubsource.com';
 
 if (process.env.NODE_ENV === 'development')
 	baseurl = 'http://localhost:3000';
@@ -56,11 +56,10 @@ app.set('view engine', 'pug');
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded(
-	{ 
-		extended: false,
-		limit: 2000000
-	}));
+app.use(express.urlencoded({ 
+	extended: false,
+	limit: 2000000
+}));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
 	secret: '98d38h38r8148n3y3RNY3n98yr13989ur[014114c8yn2huf927gfbvybyrhuiheg34iuwngug3y3RNY3n98yr83RNQO8RYq3yt23YT2n83rN3RO2tnuay4ltiueyta3984npq29yc83rym[238rmy283ryn',
