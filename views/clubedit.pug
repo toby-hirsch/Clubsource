@@ -16,13 +16,13 @@ append content
 		
 		label(for='name') Club Name
 		br
-		input.textinput#clubname(type='text' name='clubname')
+		input.textinput#clubname(type='text' name='clubname' required)
 		br
 	
 		label(for='username') Club Username
 			p This will be used as a unique identifier for you club. Users will see it under your club name.
 		br
-		input.textinput#username(type='text' name='username')
+		input.textinput#username(type='text' name='username' pattern='[0-9a-zA-Z]+' maxlength='20' required)
 		br
 	
 		label(for='officers') Club Officers
@@ -39,7 +39,7 @@ append content
 		
 		label Description
 		#editor
-		input#dummydescription(type='hidden' name='description')
+		input#dummydescription(type='hidden' name='description' required)
 		
 		label(for='tags') Tags
 		input#selectize(name='tags')

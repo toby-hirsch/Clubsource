@@ -30,15 +30,19 @@ const Club = mongoose.model('Club', ClubSchema);
 
 function validateClub(club){
 	const schema = {
-		name: Joi.string().min(5).max(255),
-		leader: Joi.string().min(5).max(255).email(),
-		description: Joi.string().min(5),
-		tags: Joi.string()
+		name: Joi.string().required(),
+		username: Joi.string().alphanum().max(20).required(),
+		leader: Joi.string().email().required(),
+		officers: Joi.string().allow(''),
+		meetingdates: Joi.string().allow(''),
+		description: Joi.string().min(5).required(),
+		tags: Joi.string().allow('')
 	};
 	
 	var result = Joi.validate(club, schema);
 	
-	console.log('validation result: ' + result);
+	//console.log('validation result');
+	//console.log(result);
 	
 	return result;
 }

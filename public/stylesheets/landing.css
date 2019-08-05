@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600|Open+Sans:400,400i,600'); /*Change this to eliminate all the unused Montserrat thicknesses*/
+body{
+	text-align: center;
+}
+.buttoncontainer{
+	display: inline-block;
+	margin: auto;
+}
+button{
+	height: 70px;
+	width: 300px;
+	border-radius: 10px;
+	border: 1px solid hsl(195, 100%, 40%);
+	background-color: white;
+	color: hsl(195, 100%, 40%);
+	margin: 2px;
+	font-size: 1.5em;
+	transition: all 0.2s ease;
+}
+button:hover{
+	border-color: white;
+	background-color: hsla(195, 100%, 40%);
+	color: white;
+}
+h2{
+	font-family: 'Montserrat', 'Open Sans', 'Sans Serif';
+	font-size: 3em;
+	margin-bottom: 30px;
+}
+.imgcontainer{
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 100vh;
+	background-image: url('/images/landingbackground.jpg');
+	background-size: cover;
+	z-index: -200;
+}
+.imgshade{
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 100vh;
+	background-color: hsla(0, 0%, 0%, 0.5);
+	z-index: -100;
+}
+.infocontainer{
+	background-color: hsla(195, 100%, 70%, 0.8);
+	padding: 50px;
+	margin: 30px 0;
+}
+.title{
+	font-family: 'Montserrat', 'Open Sans', 'Sans Serif';
+	font-weight: 500;
+	text-transform: uppercase;
+	margin-top: 100px;
+	font-size: 6em;
+	color: white;
+	text-align: center;
+	letter-spacing: 0.1em;
+}
+.title span{
+	color: hsl(195, 100%, 50%);
+}

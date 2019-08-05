@@ -11,7 +11,7 @@ const toolbar = [
 
 $("#username").on({
 	keydown: function(e) {
-		if (e.which === 32)
+		if (e.which !== 8 && (e.which < 48 || e.which > 90))
 		  return false;
 	},
 	change: function() {
@@ -80,7 +80,7 @@ $('#editform').submit(function(event){
 
 
 function restoreFormData(data){
-	console.log(data);
+	//console.log(data);
 	$('#clubname').val(data.name);
 	$('#username').val(data.username);
 	$('#meetingdates').val(data.meetingdates);
@@ -92,7 +92,7 @@ function restoreFormData(data){
 	}
 	
 	var officers = data.officers.split(',');
-	console.log(officers);
+	//console.log(officers);
 	for (key in officers){
 		selectizeofficers.addOption({value: officers[key], name: officers[key]});
 		selectizeofficers.addItem(officers[key]);
