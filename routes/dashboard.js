@@ -63,7 +63,7 @@ router.post('/edit', (req, res, next) => {
 			formData: JSON.stringify(newclub)
 		});
 	
-	//console.log('Size: ' + sizeof(newclub));
+	console.log('Size: ' + size);
 	
 	
 	
