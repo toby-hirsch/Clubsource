@@ -2,11 +2,15 @@ const express = require('express');
 const router = express.Router();
 const {Club, validate} = require('../schemas/club');
 const Converter = require('quill-delta-to-html').QuillDeltaToHtmlConverter;
+const sizeof = require('object-sizeof');
 
 
 const invalidUsernameError = 'Please enter a valid username. Valid usernames should be at least five characters and not include any white space.';
 const duplicateUsernameError = 'Username taken';
 const genericError = 'There was an error processing your club. Check that you filled out all fields properly and try again.';
+const payloadError = function(mb){
+	return 'Your page is ' + mb + ' MB. The limit is 5MB. This is most likely due to a large number of images. Try removing some and resubmitting.';
+}
 
 router.get("/", (req, res) => {
 	console.log(req.user.credentials.provider.name);
@@ -40,9 +44,7 @@ router.get('/edit', (req, res) => {
 router.post('/edit', (req, res, next) => {
 	
 	//Validate submitted data -- need to flesh this out more
-	
-	//TODO: use Object.bsonsize() to make sure that documents don't exceed 2MB
-	
+		
 	var newclub = {
 		name: req.body.clubname,
 		username: req.body.username,
@@ -52,6 +54,18 @@ router.post('/edit', (req, res, next) => {
 		description: req.body.description,
 		tags: req.body.tags
 	}
+	
+	let size = sizeof(newclub);
+	
+	if (size > 5000000)
+		return res.render('clubedit', {
+			error: payloadError(size / 1000000.0),
+			formData: JSON.stringify(newclub)
+		});
+	
+	//console.log('Size: ' + sizeof(newclub));
+	
+	
 	
 	console.log('validation errors:');
 	let result = validate(newclub);
@@ -84,8 +98,6 @@ router.post('/edit', (req, res, next) => {
 				});
 			return;
 		}
-		console.log('club after update: ');
-		console.log(club);
 		res.redirect('../../clubs/' + req.body.username); 
 	});
 });
