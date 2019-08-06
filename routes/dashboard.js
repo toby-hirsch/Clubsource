@@ -18,7 +18,7 @@ router.get("/", (req, res) => {
 		if (club){
 			var display = club;
 			display.description = new Converter(JSON.parse(display.description), {}).convert();
-			console.log(display.description);
+			//console.log(display.description);
 			res.render("dashboard", {
 				club: JSON.stringify(club),
 				engagement: 'no'
