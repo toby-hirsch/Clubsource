@@ -20,7 +20,7 @@ append content
 		br
 	
 		label(for='username') Club Username
-			p This will be used as a unique identifier for you club. Users will see it under your club name.
+			.fieldinfo This will be used as a unique identifier for you club. Users will see it under your club name.
 		br
 		input.textinput#username(type='text' name='username' pattern='[0-9a-zA-Z]+' maxlength='20' required)
 		br
@@ -38,17 +38,27 @@ append content
 		
 		
 		label Description
+			.fieldinfo Be sure to include:
+				ul
+					li Typical club activities
+					li Photos and videos
+					li Meeting activities
+					li Member responsibilities
 		#editor
 		input#dummydescription(type='hidden' name='description' required)
 		
 		label(for='tags') Tags
+			.fieldinfo 
+				| Choose tags from our list that represent your club. Users will see recommendations for clubs with tags that match their interests. 
+				| You can also put in your own tags, but these are not as effective in connecting you with potential members.
 		input#selectize(name='tags')
 		
 		//TODO: add a meeting dates option
 		//TODO: add an email list capability, where users can upload a CSV with emails or add emails manually with a Selectize box
 		
 		.buttoncontainer
-			button#cancel.bigbutton Cancel
+			a(href='../')
+				button#cancel.bigbutton(type='button') Cancel
 			button#publishclub.bigbutton(type='submit') Publish Changes
 			//TODO: Offer a "preview changes" option before publishing changes
 		

@@ -23,7 +23,7 @@
 	background-color: hsl(0, 50%, 90%);
 	padding: 20px;
 }
-label p{
+.fieldinfo{
 	color: hsl(0, 0%, 60%);
 	font-size: 0.8em;
 	font-style: italic;

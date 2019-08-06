@@ -95,7 +95,7 @@ app.use((req, res, next) => {
 function clubLoginRequired(req, res, next) {
 	console.log('checking login');
 	if (!req.user || req.user.credentials.provider.name != 'OKTA')
-		return res.status(401).render("unauthenticated");
+		return res.redirect(baseurl + '/myclub/login');
 
 	next();
 }
