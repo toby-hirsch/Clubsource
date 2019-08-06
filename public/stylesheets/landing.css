@@ -22,6 +22,9 @@ button:hover{
 	background-color: hsla(195, 100%, 40%);
 	color: white;
 }
+button:focus{
+	outline: none;
+}
 h2{
 	font-family: 'Montserrat', 'Open Sans', 'Sans Serif';
 	font-size: 3em;
