@@ -73,6 +73,9 @@ body{
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
 }
+.ql-image{
+	max-width: 100%;
+}
 .shrink{
 	font-size: 0.7em;
 }
