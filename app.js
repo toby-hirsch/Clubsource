@@ -167,6 +167,8 @@ app.use('/myclub/dashboard', clubLoginRequired, dashboardRouter);
 app.use('/accounts', accountRouter);
 app.use('/profile', profileRouter);
 
+app.use('/modules', express.static(__dirname + '/node_modules/'));
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

@@ -29,6 +29,7 @@
     "passport-google-oauth": "^2.0.0",
     "pug": "2.0.0-beta11",
     "quill-delta-to-html": "^0.10.9",
+    "quill-image-compress": "^1.0.1",
     "quill-image-resize-module": "^3.0.0"
   }
 }

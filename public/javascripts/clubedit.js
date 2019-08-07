@@ -1,3 +1,5 @@
+//import imageCompressor from './quill-image-compress';
+
 const toolbar = [
 	[{'size': []}],
 	['bold', 'italic', 'underline', 'strike'],
@@ -57,6 +59,7 @@ $('input').each(function(){
 });
 
 //Quill.register('modules/imageResize', ImageResize);
+Quill.register('modules/imageCompress', imageCompressor);
 
 var quill = new Quill('#editor', {
 	theme: 'snow',
@@ -74,6 +77,12 @@ var quill = new Quill('#editor', {
 				}
 			}
 		},
+		imageCompress: {
+			quality: 0.7, // default
+			maxWidth: 1000, // default
+			imageType: 'image/jpeg', // default
+			debug: true, // default
+		}
 	}
 });
 
@@ -90,7 +99,7 @@ var $selectofficers = $('#officers').selectize({
 
 let selectoptions = [];
 
-for (key in terms){
+for (let key in terms){
 	selectoptions.push({value: key, name: key, searchterms: terms[key]});
 }
 
