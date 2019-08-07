@@ -4,7 +4,20 @@ const { Club } = require('../schemas/club');
 const Converter = require('quill-delta-to-html').QuillDeltaToHtmlConverter;
 
 
-//This gets called by the React app on load, so this is where the information should be retrieved and processed for the React app
+
+
+
+router.get('/getdefault', function(req, res){
+	let arr = [];
+	Club.find({}, {username: true, name: true, tags: true}, function(err, clubs){
+		console.log(clubs);
+		res.json(clubs);
+	});
+});
+
+
+
+
 
 const TITLE_MULTIPLIER = 5;
 const USERNAME_MULTIPLIER = 50;
