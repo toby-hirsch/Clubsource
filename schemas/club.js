@@ -35,7 +35,7 @@ function validateClub(club){
 		leader: Joi.string().email().required(),
 		officers: Joi.string().allow(''),
 		meetingdates: Joi.string().allow(''),
-		description: Joi.string().min(5).required(),
+		description: Joi.string().allow('').required(),
 		tags: Joi.string().allow('')
 	};
 	

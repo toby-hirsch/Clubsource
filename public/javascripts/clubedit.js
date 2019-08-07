@@ -106,7 +106,7 @@ for (let key in terms){
 var $select = $('#selectize').selectize({
 	options: selectoptions,
 	labelField: 'name',
-	searchField: ['name', 'searchterms'], //Use this to customize searches so that synonyms also appear
+	searchField: ['name', 'searchterms'],
 	placeholder: 'tags',
 	delimiter: ',',
 	create: true,
