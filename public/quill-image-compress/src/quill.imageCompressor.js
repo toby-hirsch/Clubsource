@@ -34,7 +34,7 @@ class imageCompressor {
     this.quill = quill;
     this.options = options;
     this.range = null;
-    this.debug = true;//options.debug == null || options.debug == true;
+    this.debug = options.debug == null || options.debug == true;
 
     warnAboutOptions(options);
 

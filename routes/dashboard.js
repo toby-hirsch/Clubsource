@@ -17,6 +17,7 @@ router.get("/", (req, res) => {
 	Club.findOne({leader: req.user.profile.login}, function(err, club){
 		if (club){
 			var display = club;
+			console.log(display.name);
 			display.description = new Converter(JSON.parse(display.description), {}).convert();
 			//console.log(display.description);
 			res.render("dashboard", {
