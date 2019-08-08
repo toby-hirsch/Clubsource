@@ -26,6 +26,8 @@ const ClubSchema = new mongoose.Schema({
 },
 {collection: 'clubs'});
 
+ClubSchema.index({'$**': 'text'}, {'weights': {name: 5, username: 7, officers: 3, meetingdates: 5, description: 1, tags: 2}}); 
+
 const Club = mongoose.model('Club', ClubSchema);
 
 function validateClub(club){

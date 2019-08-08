@@ -36,7 +36,7 @@ const terms = {
 	technology: 'Computers stem engineering',
 	'volunteering/charity/community service': '',
 	writing: 'Argument creativity',
-}
+};
 
 $("#username").on({
 	keydown: function(e) {

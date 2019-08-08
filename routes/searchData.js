@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { Club } = require('../schemas/club');
 const Converter = require('quill-delta-to-html').QuillDeltaToHtmlConverter;
+const qs = require('qs');
 
 
 
@@ -29,17 +30,28 @@ const markup = /(<([^>]+)>)/ig;
 
 router.get('/search/:search', function(req, res) {
 	console.log(req.params.search);
-	var parsed = req.params.search.split('search=');
-	parsed.shift();
+	var parsed = qs.parse(req.params.search);
+	//parsed.shift();
 	console.log(parsed);
-	var keywords = clearEmpty(parsed[0].split(punc));
+	
+	Club.find({$text: {$search: parsed.search, $language: 'english'}}, {name: true, username: true, tags: true}).limit(10).exec(function(err, clubs) {
+		console.log(clubs);
+		let arr = [];
+		for (club of clubs)
+			arr.push(club);
+		res.json(arr);
+	});
+	
+	
+	
+	/*var keywords = clearEmpty(parsed.search.split(punc));
 	console.log('keywords: ', keywords);
 	var score;
 	var sortedresult = []; //Store objects with this format: {score: num, club: object with quill and tags converted}
 	Club.find({}, function(err, clubs){
 		clubs.forEach(function(club){
 			console.log('checking club');
-			console.log(club);
+			//console.log(club);
 			score = 0;
 			club.description = new Converter(JSON.parse(club.description), {}).convert();
 			score += DESCRIPTION_MULTIPLIER * getValue(keywords, clean(club.description.replace(markup, ' ')).split(punc));
@@ -55,10 +67,10 @@ router.get('/search/:search', function(req, res) {
 				score += USERNAME_MULTIPLIER;
 			console.log('final score: ' + score);
 			insertsorted(sortedresult, {score: score, club: club});
-			console.log(sortedresult);
+			//console.log(sortedresult);
 		});
 		res.json(sortedresult.map(val => val.club));
-	});
+	});*/
 	
 });
 
@@ -96,7 +108,7 @@ function getValue(keywords, content){
 }
 
 function insertsorted(arr, el){
-	console.log(el);
+	//console.log(el);
 	if (el.score == 0)
 		return;
 	arr.push(el);

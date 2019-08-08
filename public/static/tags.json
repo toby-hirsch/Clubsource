@@ -1,0 +1,145 @@
+{
+  "animals": [
+    "Pets",
+    "dogs",
+    "cats",
+    "veterinarian"
+  ],
+  "art": [
+    "Music",
+    "film",
+    "painting",
+    "drawing",
+    "creativity",
+    "photography"
+  ],
+  "business": [
+    "Entrepreneurship",
+    "marketing",
+    "finance",
+    "economics",
+    "sales",
+    "operations"
+  ],
+  "community/local": [
+    "Town",
+    "events",
+    "greenwich",
+    "connecticut"
+  ],
+  "competition": [
+    "challenge"
+  ],
+  "culture": [
+    "Awareness",
+    "language",
+    "religion",
+    "food",
+    "art"
+  ],
+  "debate": [
+    "Argument",
+    "speaking",
+    "articulate"
+  ],
+  "economics/finance": [
+    "Business",
+    "stocks",
+    "money"
+  ],
+  "entertainment": [
+    "Film",
+    "humor",
+    "music"
+  ],
+  "government/politics": [
+    "civics",
+    "advocacy",
+    "activism",
+    "constitution",
+    "law"
+  ],
+  "health": [
+    "Medicine",
+    "diseases",
+    "illnesses",
+    "mental",
+    "cure",
+    "vaccine"
+  ],
+  "history": [
+    "World",
+    "constitution"
+  ],
+  "honor society": [
+    "nhs"
+  ],
+  "language": [
+    "Spanish",
+    "german",
+    "chinese",
+    "french",
+    "japanese",
+    "italian",
+    "korean"
+  ],
+  "leadership": [
+    "Entrepreneurship",
+    "business",
+    "groups",
+    "teamwork"
+  ],
+  "math": [
+    "stem",
+    "mathematics",
+    "algebra",
+    "calculus",
+    "geometry"
+  ],
+  "music": [
+    "Instrument",
+    "band",
+    "orchestra",
+    "jazz",
+    "chorus",
+    "singing"
+  ],
+  "public speaking": [
+    "Speeches",
+    "articulate"
+  ],
+  "science": [
+    "Biology",
+    "chemistry",
+    "physics",
+    "stem"
+  ],
+  "social advocacy": [
+    "Social",
+    "justice",
+    "issues",
+    "change",
+    "society",
+    "community",
+    "activism"
+  ],
+  "sports": [
+    "Athlete",
+    "athletic",
+    "exercise",
+    "fitness",
+    "outdoors"
+  ],
+  "technology": [
+    "Computers",
+    "stem",
+    "engineering"
+  ],
+  "volunteering/charity/community service": [
+    "nonprofit"
+  ],
+  "writing": [
+    "Argument",
+    "creativity"
+  ]
+}
