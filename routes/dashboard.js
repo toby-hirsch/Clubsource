@@ -13,7 +13,6 @@ const payloadError = function(mb){
 }
 
 router.get("/", (req, res) => {
-	console.log(req.user.credentials.provider.name);
 	Club.findOne({leader: req.user.profile.login}, function(err, club){
 		if (club){
 			var display = club;

@@ -8,7 +8,7 @@ router.get('/', function(req, res){
         res.cookie('token', req.session.token);
 		//res.render('profile');
 		let email = req.user.profile.emails[0].value;
-		User.findOne({email: email}, (err, profile) => {
+		User.findOne({email: email}, (err, profile) => { //change this to findoneandupdate with upsert: true
 			if (!profile)
 				User.create({email: email}, (err, profile) => {
 					res.render('profile', profile);

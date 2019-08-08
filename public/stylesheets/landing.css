@@ -30,6 +30,13 @@ h2{
 	font-size: 3em;
 	margin-bottom: 30px;
 }
+h3{
+	font-family: 'Montserrat', 'Open Sans', 'Sans Serif';
+	text-transform: uppercase;
+	font-size: 2em;
+	letter-spacing: 0.05em;
+	color: hsl(0, 0%, 75%);
+}
 .imgcontainer{
 	position: absolute;
 	top: 0;
