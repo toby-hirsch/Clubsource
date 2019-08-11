@@ -10,6 +10,7 @@ const express = require('express');
 const path = require('path');
 const logger = require('morgan');
 const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 const okta = require("@okta/okta-sdk-nodejs");
 const ExpressOIDC = require("@okta/oidc-middleware").ExpressOIDC;
 const mongoose = require('mongoose');
@@ -23,6 +24,12 @@ if (process.env.NODE_ENV === 'development')
 	baseurl = 'http://localhost:3000';
 
 console.log('base url: ' + baseurl);
+
+mongoose.connect('mongodb+srv://admin:Toby0188@clubs-rxh79.mongodb.net/clubsource?retryWrites=true&w=majority', 
+	{useNewUrlParser: true, useFindAndModify: false, useCreateIndex: true}, function(err){
+	if (err) throw err; //Change this before publishing
+	console.log('Connected to MongoDB');
+});
 
 gauth(passport);
 
@@ -67,12 +74,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
 	secret: '98d38h38r8148n3y3RNY3n98yr13989ur[014114c8yn2huf927gfbvybyrhuiheg34iuwngug3y3RNY3n98yr83RNQO8RYq3yt23YT2n83rN3RO2tnuay4ltiueyta3984npq29yc83rym[238rmy283ryn',
 	resave: true,
-	saveUninitialized: false
+	saveUninitialized: false,
+	store: new MongoStore({ mongooseConnection: mongoose.connection })
 }));
 app.use('/myclub', oidc.router);
 app.use((req, res, next) => {
-	/*console.log('session id: ' + req.sessionID);
-	console.log('*****************user in session**************************');
+	console.log('session id: ' + req.sessionID);
+	/*console.log('*****************user in session**************************');
 	console.log(req.session.user);
 	console.log('**********************************club in session*****************************');
 	console.log(req.session.club);*/
@@ -88,12 +96,11 @@ app.use((req, res, next) => {
 		next()
 	}
 	else if (req.userinfo && req.userinfo.sub) {//Okta
-		//console.log('req.userinfo');
-		//console.log(req.userinfo);
+		console.log('req.userinfo.sub');
+		console.log(req.userinfo.sub);
 		oktaClient.getUser(req.userinfo.sub)
 			.then(user => {
 				req.club = user;
-				res.locals.club = user;
 				req.session.club = user;
 				res.locals.accType.club = true;
 				next();
@@ -138,11 +145,7 @@ if (process.env.NODE_ENV === 'development') {
     next();
 });*/
 
-mongoose.connect('mongodb+srv://admin:Toby0188@clubs-rxh79.mongodb.net/clubsource?retryWrites=true&w=majority', 
-	{useNewUrlParser: true, useFindAndModify: false, useCreateIndex: true}, function(err){
-	if (err) throw err; //Change this before publishing
-	console.log('Connected to MongoDB');
-});
+
 
 
 app.get('/auth/google', passport.authenticate('google', {

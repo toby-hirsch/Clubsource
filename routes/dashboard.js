@@ -12,19 +12,22 @@ const payloadError = function(mb){
 	return 'Your page is ' + mb + ' MB. The limit is 5MB. This is most likely due to a large number of images. Try removing some and resubmitting.';
 }
 
-router.get("/", (req, res) => {
+router.get('/', (req, res) => {
 	Club.findOne({leader: req.club.profile.login}, function(err, club){
 		if (club){
 			var display = club;
 			display.description = new Converter(JSON.parse(display.description), {}).convert();
 			//console.log(display.description);
-			res.render("dashboard", {
+			console.log('sending club');
+			res.render('dashboard', {
 				club: JSON.stringify(club),
 				engagement: 'no'
 			});
 		}
-		else
+		else{
+			console.log('no club found');
 			res.render('dashboard');
+		}
 	});
 	
 });
