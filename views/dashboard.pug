@@ -7,13 +7,10 @@ append styles
 	link(rel='stylesheet' href='/stylesheets/clubs.css' type='text/css')
 
 append content
-	- console.log('club in dashboard.pug:');
-	- console.log(club);
 	.row.no-gutters
 		.col-lg
 			h2 Your Page
 			if (club)
-				- console.log('club type in dashboard.pug:' + typeof club);
 				- var clubobj = JSON.parse(club);
 				.text-center
 					a(href='dashboard/edit')

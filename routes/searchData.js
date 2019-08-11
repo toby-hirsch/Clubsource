@@ -7,11 +7,22 @@ const qs = require('qs');
 
 
 router.get('/getdefault', function(req, res){
-	let arr = [];
-	Club.find({}, {username: true, name: true, tags: true}, function(err, clubs){
-		console.log(clubs);
-		res.json(clubs);
-	});
+	let status = 'not signed in';
+	if (req.user){
+		User.findOne({email: req.user}, {interests: true}, function(err, user){
+			if (user.interests)
+				Club.find({$text: {$search: user.interests.join(' '), $language: 'english'}}, {name: true, username: true, tags: true}, function(err, clubs){
+					res.json({status: 'good', clubs: clubs});
+				});
+			else
+				status = 'not configured'
+		});
+	}
+	else 
+		Club.find({}, {username: true, name: true, tags: true}, function(err, clubs){
+			console.log(clubs);
+			res.json({'status': status, clubs: clubs});
+		});
 });
 
 
@@ -46,13 +57,13 @@ router.get('/:username', function(req, res) {
 		club.description = new Converter(JSON.parse(club.description), {}).convert();
 		
 		let isowner = false;
-		if (req.club)
-			if (club.leader===req.user.profile.login)
+		if (req.clubowner)
+			if (club.leader===req.clubowner)
 				isowner = true;
 				
 		if (req.user) {
 			console.log(club._id);
-			User.findOne({email: req.user.profile.emails[0].value, subscriptions: club._id}, function(err, user){
+			User.findOne({email: req.user, subscriptions: club._id}, function(err, user){
 				if (err) {
 					console.log(err.message);
 					res.json(err);
@@ -80,11 +91,8 @@ router.get('/:username', function(req, res) {
 });
 
 router.post('/subscribe', function(req, res){
-	console.log(req.body);
-	console.log(req.user.profile.emails[0].value);
-	console.log(req.body);
 	if (req.body.adding)
-		User.update({email: req.user.profile.emails[0].value}, {$push: {subscriptions: req.body.club}}, function(err, user){
+		User.update({email: req.user}, {$push: {subscriptions: req.body.club}}, function(err, user){
 			if (err){
 				console.log(err.message);
 				res.json(err);
@@ -93,7 +101,7 @@ router.post('/subscribe', function(req, res){
 		});
 		
 	else
-		User.update({email: req.user.profile.emails[0].value}, {$pull: {subscriptions: req.body.club}}, function(err, user){
+		User.update({email: req.user}, {$pull: {subscriptions: req.body.club}}, function(err, user){
 			if (err){
 				console.log(err.message);
 				res.json(err);

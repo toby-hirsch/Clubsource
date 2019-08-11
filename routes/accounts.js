@@ -12,7 +12,7 @@ router.get('/type', (req, res) => {
 	let type = {};
 	if (req.user)
 		type.student = true;
-	if (req.club)
+	if (req.clubowner)
 		type.club = true;
 	console.log('account type:');
 	console.log(type);

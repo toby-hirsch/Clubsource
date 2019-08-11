@@ -3,10 +3,9 @@ const router = express.Router();
 const { User } = require('../schemas/user');
 
 router.get('/user', function(req, res){
-	if (req.session.token && req.user && req.user.profile.emails) {
+	if (req.session.token && req.user) {
 		res.cookie('token', req.session.token);
-		let email = req.user.profile.emails[0].value;
-		User.findOneAndUpdate({email: email}, {email: email}, {upsert: true, populate: 'subscriptions'}, (err, profile) => {
+		User.findOneAndUpdate({email: req.user}, {email: req.user}, {upsert: true, populate: 'subscriptions'}, (err, profile) => {
 			res.json(profile);
 		});
     } else {
@@ -22,7 +21,7 @@ router.post('/updatetags', function(req, res){
 	console.log(req.body);
 	console.log(typeof req.body);
 	let tags = req.body;
-	User.findOneAndUpdate({email: req.user.profile.emails[0].value}, {interests: tags}, {upsert: true, new: true}, function(err, user){
+	User.findOneAndUpdate({email: req.user}, {interests: tags}, {upsert: true, new: true}, function(err, user){
 		if (err) {
 			console.log(err.message);
 			res.json(err);

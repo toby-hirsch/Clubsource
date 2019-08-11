@@ -88,20 +88,21 @@ app.use((req, res, next) => {
 
 	if (req.session.user){ //Google OAuth
 		req.user = req.session.user;
+		console.log('user: ' + req.user);
 		res.locals.accType.user = true;
 	}
-	if (req.session.club){
-		req.club = req.session.club;
+	if (req.session.clubowner){
+		req.clubowner = req.session.clubowner;
 		res.locals.accType.club = true;
-		next()
+		next();
 	}
 	else if (req.userinfo && req.userinfo.sub) {//Okta
 		console.log('req.userinfo.sub');
 		console.log(req.userinfo.sub);
 		oktaClient.getUser(req.userinfo.sub)
 			.then(user => {
-				req.club = user;
-				req.session.club = user;
+				req.clubowner = user.profile.login;
+				req.session.clubowner = user.profile.login;
 				res.locals.accType.club = true;
 				next();
 			}).catch(err => {
@@ -114,7 +115,7 @@ app.use((req, res, next) => {
 
 function clubLoginRequired(req, res, next) {
 	console.log('checking login');
-	if (!req.club)
+	if (!req.clubowner)
 		return res.redirect(baseurl + '/myclub/login');
 
 	next();
@@ -156,7 +157,7 @@ app.get('/auth/google/callback',
     (req, res) => {
 		console.log('redirecting to profile from callback');
         req.session.token = req.user.token;
-		req.session.user = req.user;
+		req.session.user = req.user.profile.emails[0].value;
         res.redirect('/profile');
     }
 );
