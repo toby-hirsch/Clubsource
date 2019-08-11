@@ -10,7 +10,7 @@ router.get('/', function(req, res, next) {
 	res.render('clublandingpage');
 });
 
-router.get('/clubs(/*)?', function(req, res) {
+router.get('/:path(clubs|profile)(/*)?', function(req, res) {
 	res.sendFile(path.join(__dirname, '../public', 'app.html'));
 });
 

@@ -1,0 +1,16 @@
+extends layout
+
+block variables
+	- var title = 'Log In'
+	
+append content
+	.text-center
+		.logincontainer
+			h3(style='margin-bottom: 20px') I am a...
+			a(href='/auth/google')
+				button.bigbutton Student
+			a(href='/myclub/dashboard' style='margin-left: 2px')
+				button.bigbutton Club Leader
+			p.gray.text-left.d-inline-block(style='margin-top: 20px; width: 402px')
+				| If you want to find clubs you are interested in, sign in as a student.
+				| If you want to create a page for your club, sign in as a club owner

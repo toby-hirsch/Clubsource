@@ -18,6 +18,7 @@
     "express": "~4.16.1",
     "express-generator": "^4.16.1",
     "express-session": "^1.15.6",
+    "googleapis": "^42.0.0",
     "heroku-ssl-redirect": "^0.0.4",
     "http-errors": "~1.6.3",
     "joi": "^14.3.1",
@@ -26,11 +27,12 @@
     "morgan": "~1.9.1",
     "object-sizeof": "^1.4.0",
     "passport": "^0.4.0",
-    "passport-google-oauth": "^2.0.0",
+    "passport-google-oauth2": "^0.2.0",
     "pug": "2.0.0-beta11",
     "qs": "^6.7.0",
     "quill-delta-to-html": "^0.10.9",
     "quill-image-compress": "^1.0.1",
     "quill-image-resize-module": "^3.0.0"
-  }
+  },
+  "devDependencies": {}
 }

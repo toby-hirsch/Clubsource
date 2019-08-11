@@ -21,9 +21,17 @@ html(lang='en')
 				.navcont.navleft
 					a.mainlogonav(href='/') clubsource
 				.navcont.navright
-					a.navlink(href='/dashboard') Dashboard
+					- console.log('account type in pug: ');
+					- console.log(accType);
+					if accType && accType.user
+						a.navlink(href='/profile') Profile
+					if accType && accType.club
+						a.navlink(href='/dashboard') Dashboard
 					a.navlink(href='/clubs') Browse Clubs
-					a.navlink(href='/accounts/logout') Log Out
+					if accType && (accType.student || accType.club)
+						a.navlink(href='/accounts/logout') Log Out
+					else
+						a.navlink(href='/accounts/login') Log In
 					
 			h1.title #{title}
 			

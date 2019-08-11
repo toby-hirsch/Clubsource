@@ -9,7 +9,7 @@ const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const logger = require('morgan');
-const session = require('cookie-session');
+const session = require('express-session');
 const okta = require("@okta/okta-sdk-nodejs");
 const ExpressOIDC = require("@okta/oidc-middleware").ExpressOIDC;
 const mongoose = require('mongoose');
@@ -74,19 +74,35 @@ app.use((req, res, next) => {
 	/*if (!req.userinfo) {
 		return next();
 	}*/
+	console.log('session id: ' + req.sessionID);
+	console.log('*****************user in session**************************');
+	console.log(req.session.user);
+	console.log('**********************************club in session*****************************');
+	console.log(req.session.club);
+	res.locals.accType = {};
 
-	if (req.userinfo)
+	if (req.session.user){ //Google OAuth
+		req.user = req.session.user;
+		res.locals.accType.user = true;
+	}
+	if (req.session.club){
+		req.club = req.session.club;
+		res.locals.accType.club = true;
+		next()
+	}
+	else if (req.userinfo && req.userinfo.sub) {//Okta
+		console.log('req.userinfo');
+		console.log(req.userinfo);
 		oktaClient.getUser(req.userinfo.sub)
 			.then(user => {
-				req.user = user;
-				res.locals.user = user;
+				req.club = user;
+				res.locals.club = user;
+				req.session.club = user;
+				res.locals.accType.club = true;
 				next();
 			}).catch(err => {
 				next(err);
 			});
-	else if (req.session.passport){
-		req.user = req.session.passport.user;
-		next();
 	}
 	else
 		next();
@@ -94,7 +110,7 @@ app.use((req, res, next) => {
 
 function clubLoginRequired(req, res, next) {
 	console.log('checking login');
-	if (!req.user || req.user.credentials.provider.name != 'OKTA')
+	if (!req.club)
 		return res.redirect(baseurl + '/myclub/login');
 
 	next();
@@ -138,7 +154,9 @@ app.get('/auth/google', passport.authenticate('google', {
 app.get('/auth/google/callback',
     passport.authenticate('google', {failureRedirect:'/'}),
     (req, res) => {
+		console.log('redirecting to profile from callback');
         req.session.token = req.user.token;
+		req.session.user = req.user;
         res.redirect('/profile');
     }
 );
@@ -161,11 +179,11 @@ const dashboardRouter = require('./routes/dashboard');
 const accountRouter = require('./routes/accounts');
 const profileRouter = require('./routes/profile');
 
+app.use('/profileData', profileRouter);
 app.use('/', indexRouter);
 app.use('/searchData', searchRouter);
 app.use('/myclub/dashboard', clubLoginRequired, dashboardRouter);
 app.use('/accounts', accountRouter);
-app.use('/profile', profileRouter);
 
 app.use('/modules', express.static(__dirname + '/node_modules/'));
 

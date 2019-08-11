@@ -26,6 +26,15 @@ body{
 .gray{
 	color: hsl(0, 0%, 50%);
 }
+.logincontainer{
+	display: inline-block;
+	background-color: hsl(0, 0%, 95%);
+	border-radius: 10px;
+	border: 1px solid hsl(0, 0%, 50%);
+	padding: 30px;
+	width: 500px;
+	max-width: 80%;
+}
 .navbar{
 	height: 80px;
 	border-bottom: 1px solid hsl(0, 0%, 75%);

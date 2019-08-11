@@ -13,10 +13,9 @@ const payloadError = function(mb){
 }
 
 router.get("/", (req, res) => {
-	Club.findOne({leader: req.user.profile.login}, function(err, club){
+	Club.findOne({leader: req.club.profile.login}, function(err, club){
 		if (club){
 			var display = club;
-			console.log(display.name);
 			display.description = new Converter(JSON.parse(display.description), {}).convert();
 			//console.log(display.description);
 			res.render("dashboard", {
@@ -31,7 +30,7 @@ router.get("/", (req, res) => {
 });
 
 router.get('/edit', (req, res) => {
-	Club.findOne({leader: req.user.profile.login}, function(err, club){
+	Club.findOne({leader: req.club.profile.login}, function(err, club){
 		if (club)
 			res.render('clubedit', {
 				formData: JSON.stringify(club)
@@ -48,7 +47,7 @@ router.post('/edit', (req, res, next) => {
 	var newclub = {
 		name: req.body.clubname,
 		username: req.body.username,
-		leader: req.user.profile.login,
+		leader: req.club.profile.login,
 		officers: req.body.officers,
 		meetingdates: req.body.meetingdates,
 		description: req.body.description,
@@ -82,7 +81,7 @@ router.post('/edit', (req, res, next) => {
 	
 	//Upsert newclub object
 	
-	Club.findOneAndUpdate({leader: req.user.profile.login}, newclub, {upsert: true, 'new': true}, function(err, club){
+	Club.findOneAndUpdate({leader: req.club.profile.login}, newclub, {upsert: true, 'new': true}, function(err, club){
 		if (err) {
 			if (err.message.includes('E11000 duplicate key error')){
 				newclub.username = '';

@@ -1,4 +1,4 @@
-const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+const GoogleStrategy = require('passport-google-oauth2').Strategy;
 let baseurl = 'https://greenwich.myclubsource.com';
 
 if (process.env.NODE_ENV=='development')

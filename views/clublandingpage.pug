@@ -14,6 +14,10 @@ html(lang='en')
 		//link(rel='stylesheet', href='/stylesheets/body.css', type='text/css')
 		link(rel='stylesheet', href='/stylesheets/landing.css' type='text/css')
 	body
+		if accType.student
+			- window.location.href = '/profile'
+		if accType.student
+			- window.location.href = '/myclub/dashboard'
 		h1.title 
 			| Welcome to 
 			span Clubsource
@@ -23,8 +27,8 @@ html(lang='en')
 		.infocontainer
 			h2 Get Started
 			.buttoncontainer
+				a(href='/accounts/login')
+					button.browse Log In/Register
 				a(href='clubs')
-					button.browse Browse Clubs
-				a(href='myclub/dashboard')
-					button.create Create Your Page
+					button.create Browse as a guest
 		

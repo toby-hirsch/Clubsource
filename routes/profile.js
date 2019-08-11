@@ -2,29 +2,35 @@ const express = require('express');
 const router = express.Router();
 const { User } = require('../schemas/user');
 
-router.get('/', function(req, res){
-	if (req.session.token) {
-		console.dir(req.user);
-        res.cookie('token', req.session.token);
-		//res.render('profile');
+router.get('/user', function(req, res){
+	if (req.session.token && req.user && req.user.profile.emails) {
+		res.cookie('token', req.session.token);
 		let email = req.user.profile.emails[0].value;
-		User.findOne({email: email}, (err, profile) => { //change this to findoneandupdate with upsert: true
-			if (!profile)
-				User.create({email: email}, (err, profile) => {
-					res.render('profile', profile);
-				});
-			res.render('profile', profile);
+		User.findOneAndUpdate({email: email}, {email: email}, {upsert: true, populate: 'subscriptions'}, (err, profile) => {
+			res.json(profile);
 		});
-        /*res.json({
-            status: 'session cookie set',
-			email: req.user.profile.emails[0].value
-        });*/
     } else {
-        res.cookie('token', '')
-        res.json({
-            status: 'session cookie not set'
-        });
+		res.cookie('token', '');
+		res.json('');
     }
+});
+
+router.post('/updatetags', function(req, res){
+	if (!req.user)
+		return res.json('not signed in');
+	console.log('tag update request data:');
+	console.log(req.body);
+	console.log(typeof req.body);
+	let tags = req.body;
+	User.findOneAndUpdate({email: req.user.profile.emails[0].value}, {interests: tags}, {upsert: true, new: true}, function(err, user){
+		if (err) {
+			console.log(err.message);
+			res.json(err);
+		}
+		console.log('updated object');
+		console.log(user);
+		res.json(user);
+	});
 });
 
 module.exports = router;

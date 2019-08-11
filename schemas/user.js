@@ -7,27 +7,26 @@ const UserSchema = new mongoose.Schema({
 		required: true,
 		unique: true
 	},
-	interests: [String],
-	subscriptions: [String]
+	interests: [{type: String, unique: true}],
+	subscriptions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Club', unique: true }]
 },
 {collection: 'users'});
 
 const User = mongoose.model('User', UserSchema);
 
-/*function validateUser(user){
+function validateUser(user){
 	const schema = {
-		firstName: Joi.string().max(255),
-		lastName: Joi.string().min(5).max(255).email(),
-		description: Joi.string().min(5),
-		tags: Joi.string()
+		email: Joi.string().email().required(),
+		interests: Joi.array().items(Joi.string()),
+		subscriptions: Joi.array()
 	};
 	
-	var result = Joi.validate(club, schema);
+	var result = Joi.validate(user, schema);
 	
 	console.log('validation result: ' + result);
 	
 	return result;
-}*/
+}
 
 exports.User = User;
-//exports.validate = validateClub;
+exports.validate = validateUser;
