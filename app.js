@@ -71,14 +71,11 @@ app.use(session({
 }));
 app.use('/myclub', oidc.router);
 app.use((req, res, next) => {
-	/*if (!req.userinfo) {
-		return next();
-	}*/
-	console.log('session id: ' + req.sessionID);
+	/*console.log('session id: ' + req.sessionID);
 	console.log('*****************user in session**************************');
 	console.log(req.session.user);
 	console.log('**********************************club in session*****************************');
-	console.log(req.session.club);
+	console.log(req.session.club);*/
 	res.locals.accType = {};
 
 	if (req.session.user){ //Google OAuth
@@ -91,8 +88,8 @@ app.use((req, res, next) => {
 		next()
 	}
 	else if (req.userinfo && req.userinfo.sub) {//Okta
-		console.log('req.userinfo');
-		console.log(req.userinfo);
+		//console.log('req.userinfo');
+		//console.log(req.userinfo);
 		oktaClient.getUser(req.userinfo.sub)
 			.then(user => {
 				req.club = user;
