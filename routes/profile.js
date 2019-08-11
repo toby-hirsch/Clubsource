@@ -28,7 +28,7 @@ router.post('/updatetags', function(req, res){
 		}
 		console.log('updated object');
 		console.log(user);
-		res.json(user);
+		res.json(user.interests);
 	});
 });
 
