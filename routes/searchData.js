@@ -53,9 +53,6 @@ router.get('/:username', function(req, res) {
 		if (req.user) {
 			console.log(club._id);
 			User.findOne({email: req.user.profile.emails[0].value, subscriptions: club._id}, function(err, user){
-				console.log('mongoose is user subscribed request');
-				console.log(user);
-				console.log(user.subscriptions);
 				if (err) {
 					console.log(err.message);
 					res.json(err);
