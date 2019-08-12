@@ -53,11 +53,11 @@ router.get('/search/:search', function(req, res) {
 		for (club of clubs)
 			arr.push(club);
 		Ad.aggregate([{ $sample: { size: 2 } }]).exec(function(err, ads){
-			for (ad of ads){
+			/*for (ad of ads){
 				ad.img = ad.img.toString('base64');
 				//console.log(ad);
 			}
-			/*if (ads[0]._id.equals(ads[1]._id))
+			if (ads[0]._id.equals(ads[1]._id))
 				console.log('**********************************Non-unique result*************************************');*/
 			res.json({
 				clubs: arr,
@@ -73,48 +73,52 @@ router.get('/search/:search', function(req, res) {
 router.get('/:username', function(req, res) {
 	var username = req.params.club;
 	console.log('Received request with username ' + req.params.username);
-	Club.findOne({username: req.params.username}, function(err, club){
-		if (err) {
-			console.log(err.message);
-			res.json(err);
-		} //Change before deploying
-		if (club===null){
-			res.json('not found');
-			res.status(404);
-		}
-		club.description = new Converter(JSON.parse(club.description), {}).convert();
-		
-		let isowner = false;
-		if (req.clubowner)
-			if (club.leader===req.clubowner)
-				isowner = true;
-				
-		if (req.user) {
-			console.log(club._id);
-			User.findOne({email: req.user, subscriptions: club._id}, function(err, user){
-				if (err) {
-					console.log(err.message);
-					res.json(err);
-				}
-				let subscribed = false;
-				if (user)
-					subscribed = true;
+	Ad.aggregate([{ $sample: { size: 2 } }]).exec(function(err, ads){
+		Club.findOne({username: req.params.username}, function(err, club){
+			if (err) {
+				console.log(err.message);
+				res.json(err);
+			} //Change before deploying
+			if (club===null){
+				res.json('not found');
+				res.status(404);
+			}
+			club.description = new Converter(JSON.parse(club.description), {}).convert();
+			
+			let isowner = false;
+			if (req.clubowner)
+				if (club.leader===req.clubowner)
+					isowner = true;
+					
+			if (req.user) {
+				console.log(club._id);
+				User.findOne({email: req.user, subscriptions: club._id}, function(err, user){
+					if (err) {
+						console.log(err.message);
+						res.json(err);
+					}
+					let subscribed = false;
+					if (user)
+						subscribed = true;
+					res.json({
+						club: club,
+						subscribed: subscribed,
+						isowner: isowner,
+						ads: ads
+					});
+					
+				});
+			}
+			else 
 				res.json({
 					club: club,
-					subscribed: subscribed,
-					isowner: isowner
+					subscribed: false,
+					isowner: isowner,
+					ads: ads
 				});
 				
-			});
-		}
-		else 
-			res.json({
-				club: club,
-				subscribed: false,
-				isowner: isowner
-			});
 			
-		
+		});
 	});
 });
 
