@@ -88,11 +88,13 @@ app.use((req, res, next) => {
 
 	if (req.session.user){ //Google OAuth
 		req.user = req.session.user;
+		res.locals.user = req.user;
 		console.log('user: ' + req.user);
 		res.locals.accType.user = true;
 	}
 	if (req.session.clubowner){
 		req.clubowner = req.session.clubowner;
+		res.locals.clubowner = req.clubowner;
 		res.locals.accType.club = true;
 		next();
 	}
@@ -102,6 +104,7 @@ app.use((req, res, next) => {
 		oktaClient.getUser(req.userinfo.sub)
 			.then(user => {
 				req.clubowner = user.profile.login;
+				res.locals.clubowner = req.clubowner
 				req.session.clubowner = user.profile.login;
 				res.locals.accType.club = true;
 				next();
