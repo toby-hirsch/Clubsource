@@ -65,7 +65,9 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 app.use(logger('dev'));
-app.use(express.json());
+app.use(express.json({
+	limit: '10mb'
+}));
 app.use(express.urlencoded({ 
 	extended: false,
 	limit: '10mb'
@@ -79,7 +81,7 @@ app.use(session({
 }));
 app.use('/myclub', oidc.router);
 app.use((req, res, next) => {
-	console.log('session id: ' + req.sessionID);
+	//console.log('session id: ' + req.sessionID);
 	/*console.log('*****************user in session**************************');
 	console.log(req.session.user);
 	console.log('**********************************club in session*****************************');
@@ -89,7 +91,7 @@ app.use((req, res, next) => {
 	if (req.session.user){ //Google OAuth
 		req.user = req.session.user;
 		res.locals.user = req.user;
-		console.log('user: ' + req.user);
+		//console.log('user: ' + req.user);
 		res.locals.accType.user = true;
 	}
 	if (req.session.clubowner){
@@ -99,8 +101,8 @@ app.use((req, res, next) => {
 		next();
 	}
 	else if (req.userinfo && req.userinfo.sub) {//Okta
-		console.log('req.userinfo.sub');
-		console.log(req.userinfo.sub);
+		//console.log('req.userinfo.sub');
+		//console.log(req.userinfo.sub);
 		oktaClient.getUser(req.userinfo.sub)
 			.then(user => {
 				req.clubowner = user.profile.login;
@@ -117,7 +119,7 @@ app.use((req, res, next) => {
 });
 
 function clubLoginRequired(req, res, next) {
-	console.log('checking login');
+	//console.log('checking login');
 	if (!req.clubowner)
 		return res.redirect(baseurl + '/myclub/login');
 
@@ -164,6 +166,12 @@ app.get('/auth/google/callback',
         res.redirect('/profile');
     }
 );
+
+const adhandler = require('./routes/ads.js');
+
+app.use('/myclub/adupload', adhandler);
+
+
 
 app.get('/dashboard(/*)?', (req, res) => {
 	res.redirect('/myclub' + req.originalUrl);

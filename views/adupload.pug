@@ -1,0 +1,44 @@
+extends layout
+
+block variables
+	- var title = 'Upload your ad here';
+	
+append styles
+	style.
+		form {
+			text-align: center;
+		}
+		#previewcontainer {
+			display: block;
+			height: 600px;
+			width: 300px;
+			margin: 10px auto;
+			overflow: hidden;
+			border: 1px solid black;
+		}
+
+append content
+	form(action='adupload', method='post', id='adform')
+		.container-fluid
+			.row
+				.col-sm-6
+					label(for='img') Choose an image
+					br
+					input(type='file', accept='image/*' onchange='imgchange(event)', name='img', id='imginput', required)
+				.col-sm-6
+					label(for='url') Your website:
+					br
+					input(type='url', name='url' onchange='linkchange(this.value)', id='urlinput', required)
+		br
+		hr
+		p.text-center Your Ad
+		a#previewcontainer(href='#', target='_blank')
+			img(src='#', id='preview')
+		hr
+		input(type='submit', style='margin-bottom: 40px')
+	
+append scripts
+	script(src="https://cdn.jsdelivr.net/npm/browser-image-compression@latest/dist/browser-image-compression.js")
+	script(src='/javascripts/adupload.js')
+		
+	

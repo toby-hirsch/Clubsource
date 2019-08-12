@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { Club } = require('../schemas/club');
 const { User } = require('../schemas/user');
+const { Ad } = require('../schemas/ad');
 const Converter = require('quill-delta-to-html').QuillDeltaToHtmlConverter;
 const qs = require('qs');
 
@@ -12,7 +13,14 @@ router.get('/getdefault', function(req, res){
 		User.findOne({email: req.user}, {interests: true}, function(err, user){
 			if (user.interests)
 				Club.find({$text: {$search: user.interests.join(' '), $language: 'english'}}, {name: true, username: true, tags: true}, function(err, clubs){
-					res.json({status: 'good', clubs: clubs});
+					Ad.aggregate([{ $sample: { size: 2 } }]).exec(function(err, ads){
+						res.json({
+							clubs: clubs,
+							ads: ads,
+							status: 'good'
+						});
+						
+					});
 				});
 			else
 				status = 'not configured'
@@ -21,23 +29,43 @@ router.get('/getdefault', function(req, res){
 	else 
 		Club.find({}, {username: true, name: true, tags: true}, function(err, clubs){
 			console.log(clubs);
-			res.json({'status': status, clubs: clubs});
+			Ad.aggregate([{ $sample: { size: 2 } }]).exec(function(err, ads){
+				res.json({
+					clubs: clubs,
+					ads: ads,
+					status: status
+				});
+				
+			});
 		});
 });
 
 
 router.get('/search/:search', function(req, res) {
-	console.log(req.params.search);
+	//console.log(req.params.search);
 	var parsed = qs.parse(req.params.search);
 	//parsed.shift();
-	console.log(parsed);
+	//console.log(parsed);
 	
 	Club.find({$text: {$search: parsed.search, $language: 'english'}}, {name: true, username: true, tags: true}).limit(10).exec(function(err, clubs) {
-		console.log(clubs);
+		//console.log(clubs);
 		let arr = [];
 		for (club of clubs)
 			arr.push(club);
-		res.json(arr);
+		Ad.aggregate([{ $sample: { size: 2 } }]).exec(function(err, ads){
+			for (ad of ads){
+				ad.img = ad.img.toString('base64');
+				//console.log(ad);
+			}
+			/*if (ads[0]._id.equals(ads[1]._id))
+				console.log('**********************************Non-unique result*************************************');*/
+			res.json({
+				clubs: arr,
+				ads: ads
+			});
+			
+		});
+		
 	});
 	
 });

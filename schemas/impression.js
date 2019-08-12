@@ -20,7 +20,7 @@ const ImpressionSchema = new mongoose.Schema({
 
 const Impression = mongoose.model('Impression', ImpressionSchema);
 
-function validateImpression(club){
+function validateImpression(impression){
 	const schema = {
 		sess: Joi.string().min(5).max(255),
 		page: Joi.string().min(5).max(255).email(),
