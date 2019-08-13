@@ -3,17 +3,25 @@ const router = express.Router();
 const { Club } = require('../schemas/club');
 const { User } = require('../schemas/user');
 const { Ad } = require('../schemas/ad');
+const { Impression } = require('../schemas/impression');
 const Converter = require('quill-delta-to-html').QuillDeltaToHtmlConverter;
 const qs = require('qs');
 
 
 router.get('/getdefault', function(req, res){
 	let status = 'not signed in';
-	if (req.user){
-		User.findOne({email: req.user}, {interests: true}, function(err, user){
-			if (user.interests)
-				Club.find({$text: {$search: user.interests.join(' '), $language: 'english'}}, {name: true, username: true, tags: true}, function(err, clubs){
-					Ad.aggregate([{ $sample: { size: 2 } }]).exec(function(err, ads){
+	Ad.aggregate([{ $sample: { size: 2 } }]).exec(function(err, ads){
+		Impression.create({ sess: req.session.id, ads: [ ads[0]._id, ads[1]._id ] }, (err, impression) => {
+			if (err){
+				console.error(err);
+				res.json(err);
+			}
+			console.log(impression);
+		});
+		if (req.user){
+			User.findOne({email: req.user}, {interests: true}, function(err, user){
+				if (user.interests)
+					Club.find({$text: {$search: user.interests.join(' '), $language: 'english'}}, {name: true, username: true, tags: true}, function(err, clubs){
 						res.json({
 							clubs: clubs,
 							ads: ads,
@@ -21,23 +29,22 @@ router.get('/getdefault', function(req, res){
 						});
 						
 					});
-				});
-			else
-				status = 'not configured'
-		});
-	}
-	else 
-		Club.find({}, {username: true, name: true, tags: true}, function(err, clubs){
-			console.log(clubs);
-			Ad.aggregate([{ $sample: { size: 2 } }]).exec(function(err, ads){
+				else
+					status = 'not configured'
+			});
+		}
+		else 
+			Club.find({}, {username: true, name: true, tags: true}, function(err, clubs){
+				console.log(clubs);
 				res.json({
 					clubs: clubs,
 					ads: ads,
 					status: status
 				});
-				
+					
 			});
-		});
+	});
+	
 });
 
 
@@ -59,6 +66,13 @@ router.get('/search/:search', function(req, res) {
 			}
 			if (ads[0]._id.equals(ads[1]._id))
 				console.log('**********************************Non-unique result*************************************');*/
+			Impression.create({ sess: req.session.id, ads: [ ads[0]._id, ads[1]._id ] }, (err, impression) => {
+				if (err){
+					console.error(err);
+					res.json(err);
+				}
+				console.log(impression);
+			});
 			res.json({
 				clubs: arr,
 				ads: ads
@@ -75,6 +89,13 @@ router.get('/:username', function(req, res) {
 	console.log('Received request with username ' + req.params.username);
 	Ad.aggregate([{ $sample: { size: 2 } }]).exec(function(err, ads){
 		Club.findOne({username: req.params.username}, function(err, club){
+			Impression.create({ sess: req.session.id, ads: [ ads[0]._id, ads[1]._id ], page: club._id }, (err, impression) => {
+				if (err){
+					console.error(err);
+					res.json(err);
+				}
+				console.log(impression);
+			});
 			if (err) {
 				console.log(err.message);
 				res.json(err);

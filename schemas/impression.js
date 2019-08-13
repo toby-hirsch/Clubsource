@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const joi = require('joi');
+const Joi = require('joi');
 
 const ImpressionSchema = new mongoose.Schema({
 	sess: {
@@ -7,8 +7,12 @@ const ImpressionSchema = new mongoose.Schema({
 		required: true
 	},
 	page: {
-		type: String,
-		required: true,
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'Club'
+	},
+	ads: {
+		type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Ad' }],
+		required: true
 	},
 	timestamp: {
 		type: Date,
@@ -24,16 +28,16 @@ function validateImpression(impression){
 	const schema = {
 		sess: Joi.string().min(5).max(255),
 		page: Joi.string().min(5).max(255).email(),
-		description: Joi.string().min(5),
-		tags: Joi.array.items(Joi.string())
+		ads: Joi.array,
+		timestamp: Joi.date().timestamp()
 	};
 	
-	var result = joi.validate(impression, schema);
+	var result = Joi.validate(impression, schema);
 	
 	console.log('validation result: ' + result);
 	
 	return result;
 }
 
-exports.Club = Impression;
+exports.Impression = Impression;
 exports.validate = validateImpression;
