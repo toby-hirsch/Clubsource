@@ -20,7 +20,7 @@ router.get('/getdefault', function(req, res){
 		});
 		if (req.user){
 			User.findOne({email: req.user}, {interests: true}, function(err, user){
-				if (user.interests)
+				if (user && user.interests)
 					Club.find({$text: {$search: user.interests.join(' '), $language: 'english'}}, {name: true, username: true, tags: true}, function(err, clubs){
 						res.json({
 							clubs: clubs,
