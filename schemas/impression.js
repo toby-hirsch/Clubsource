@@ -18,7 +18,7 @@ const ImpressionSchema = new mongoose.Schema({
 		type: Date,
 		required: true,
 		default: Date.now
-	} //Eventually add ads seen
+	}
 },
 {collection: 'impressions'});
 

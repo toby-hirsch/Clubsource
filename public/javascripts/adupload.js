@@ -41,7 +41,7 @@ $('#adform').submit(e => {
 				url: $('#urlinput').val()
 			}
 			$.ajax({
-				url: '/myclub/adupload',
+				url: '/myclub/ads/upload',
 				type: 'POST',
 				data: JSON.stringify(data),
 				success: res => {

@@ -169,7 +169,7 @@ app.get('/auth/google/callback',
 
 const adhandler = require('./routes/ads.js');
 
-app.use('/myclub/adupload', adhandler);
+app.use('/myclub/ads', adhandler);
 
 
 

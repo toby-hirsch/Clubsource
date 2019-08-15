@@ -1,0 +1,20 @@
+extends layout
+
+block variables
+	- var title = 'Payout';
+	
+append content
+	form(id='adpayoutform', action='/myclub/ads/payout', method='POST', style='text-align: center')
+		label(for='start') Start Date
+		br
+		input(type='date', name='start')
+		br
+		label(for='amt') Payout Amount
+		br
+		input(type='number', max='1000', name='amt' required)
+		br
+		label(for='end') End Date
+		br
+		input(type='date', name='end')
+		br
+		input(type='submit' value='Submit')

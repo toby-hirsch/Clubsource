@@ -10,22 +10,6 @@ append content
 	.row.no-gutters
 		.col-lg
 			h2 Your Page
-			if (club)
-				- var clubobj = JSON.parse(club);
-				.text-center
-					a(href='dashboard/edit')
-						button.bigbutton.leftbutton Edit
-					a(href='../clubs/' + clubobj.username)
-						button.bigbutton View
-		.col-lg
-			h2 Engagement
-			if (club)
-				.text-center
-						a(href='dashboard/engagement')
-							button.bigbutton See More
-				
-	.row.no-gutters
-		.col-lg
 			if (!club)
 				.clubcontainer
 					p You have not created a page for your club yet.
@@ -33,6 +17,12 @@ append content
 						button.bigbutton Create page
 				
 			else
+				- var clubobj = JSON.parse(club);
+				.text-center
+					a(href='dashboard/edit')
+						button.bigbutton.leftbutton Edit
+					a(href='../clubs/' + clubobj.username)
+						button.bigbutton View
 				.clubcontainer
 					h1= clubobj.name
 					p.gray.shrink= clubobj.username
@@ -42,9 +32,18 @@ append content
 					hr
 					.quillcontent !{clubobj.description}
 		.col-lg
+			h2 Engagement
 			if (!club)
 				.clubcontainer
 					p Once you create a club, you will be able to see its engagement statistics here
 			else
+				.text-center
+						a(href='dashboard/engagement')
+							button.bigbutton See More
 				.clubcontainer
 					p Engagement statistics:
+	if (club)
+		hr
+		.balance
+			h2= 'Your Balance: $' + clubobj.balance
+			p.text-center Each month, you will receive money based on how many people view your page. You can send that money to a PayPal account here.

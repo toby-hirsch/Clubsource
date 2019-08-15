@@ -22,7 +22,12 @@ const ClubSchema = new mongoose.Schema({
 		type: String,
 		required: true
 	},
-	tags: String
+	tags: String,
+	balance: {
+		type: Number,
+		required: true,
+		default: 0
+	}
 },
 {collection: 'clubs'});
 
