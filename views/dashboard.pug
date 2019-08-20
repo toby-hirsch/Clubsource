@@ -17,33 +17,41 @@ append content
 						button.bigbutton Create page
 				
 			else
-				- var clubobj = JSON.parse(club);
-				.text-center
-					a(href='dashboard/edit')
-						button.bigbutton.leftbutton Edit
-					a(href='../clubs/' + clubobj.username)
-						button.bigbutton View
 				.clubcontainer
-					h1= clubobj.name
-					p.gray.shrink= clubobj.username
-					p.gray.shrink= 'Tags: ' + clubobj.tags.replace(/,/g, ', ')
-					p.gray.shrink= 'Officers: ' + clubobj.officers.replace(/,/g, ', ')
-					p.gray.shrink= 'Meeting dates: ' + clubobj.meetingdates
+					.text-center
+						a(href='dashboard/edit')
+							button.bigbutton.leftbutton Edit
+						a(href='../clubs/' + club.username)
+							button.bigbutton View
 					hr
-					.quillcontent !{clubobj.description}
+					h1= club.name
+					p.gray.shrink= club.username
+					p.gray.shrink= 'Tags: ' + club.tags.replace(/,/g, ', ')
+					p.gray.shrink= 'Officers: ' + club.officers.replace(/,/g, ', ')
+					p.gray.shrink= 'Meeting dates: ' + club.meetingdates
+					hr
+					.quillcontent !{club.description}
 		.col-lg
 			h2 Engagement
 			if (!club)
 				.clubcontainer
 					p Once you create a club, you will be able to see its engagement statistics here
 			else
-				.text-center
-						a(href='dashboard/engagement')
-							button.bigbutton See More
 				.clubcontainer
-					p Engagement statistics:
+					.row
+						.col
+							h4 Last Month
+							hr
+							p.gray= 'Total Views: ' + engagement.last.total
+							p.gray= 'Unique Viewers: ' + engagement.last.unique
+						.col
+							h4 Month to Date
+							hr
+							p.gray= 'Total Views: ' + engagement.current.total
+							p.gray= 'Unique Viewers: ' + engagement.current.unique
+				- console.log(engagement);
 	if (club)
 		hr
 		.balance
-			h2= 'Your Balance: $' + clubobj.balance
+			h2= 'Your Balance: $' + club.balance
 			p.text-center Each month, you will receive money based on how many people view your page. You can send that money to a PayPal account here.

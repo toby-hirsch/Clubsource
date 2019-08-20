@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const {Club, validate} = require('../schemas/club');
+const { Impression } = require('../schemas/impression');
 const Converter = require('quill-delta-to-html').QuillDeltaToHtmlConverter;
 const sizeof = require('object-sizeof');
 
@@ -19,10 +20,47 @@ router.get('/', (req, res) => {
 			display.description = new Converter(JSON.parse(display.description), {}).convert();
 			//console.log(display.description);
 			console.log('sending club');
-			res.render('dashboard', {
-				club: JSON.stringify(club),
-				engagement: 'no'
+			let today = new Date(Date.now());
+			let year = today.getFullYear();
+			let month = today.getMonth();
+			let start = new Date(year, month - 1, 1);
+			let monthbreak = new Date(year, month, 0);
+			Impression.find({ page: club._id, timestamp : { $gte : start, $lt : today } }, (err, impressions) => {
+				let uniquelast = [];
+				let uniquethis = [];
+				let countlast = 0;
+				let countthis = 0;
+				for (view of impressions){
+					if (view.timestamp < monthbreak){
+						if (uniquelast.indexOf(view.ip)===-1)
+							uniquelast.push(view.ip);
+						countlast++;
+					}
+					else {
+						console.log(uniquethis);
+						console.log(view.ip);
+						if (uniquethis.indexOf(view.ip)===-1)
+							uniquethis.push(view.ip);
+						countthis++;
+					}
+				}
+				let engagement = {
+					current: {
+						unique: uniquethis.length,
+						total: countthis
+					},
+					last: {
+						unique: uniquelast.length,
+						total: countlast
+					}
+				}
+				res.render('dashboard', {
+					club: club,
+					engagement: engagement
+				});
+				
 			});
+			
 		}
 		else{
 			console.log('no club found');

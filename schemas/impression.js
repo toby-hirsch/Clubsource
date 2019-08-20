@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Joi = require('joi');
 
 const ImpressionSchema = new mongoose.Schema({
-	sess: {
+	ip: {
 		type: String,
 		required: true
 	},

@@ -11,7 +11,7 @@ const qs = require('qs');
 router.get('/getdefault', function(req, res){
 	let status = 'not signed in';
 	Ad.aggregate([{ $sample: { size: 2 } }]).exec(function(err, ads){
-		Impression.create({ sess: req.session.id, ads: [ ads[0]._id, ads[1]._id ] }, (err, impression) => {
+		Impression.create({ ip: req.ip, ads: [ ads[0]._id, ads[1]._id ] }, (err, impression) => {
 			if (err){
 				console.error(err);
 				res.json(err);
@@ -66,7 +66,7 @@ router.get('/search/:search', function(req, res) {
 			}
 			if (ads[0]._id.equals(ads[1]._id))
 				console.log('**********************************Non-unique result*************************************');*/
-			Impression.create({ sess: req.session.id, ads: [ ads[0]._id, ads[1]._id ] }, (err, impression) => {
+			Impression.create({ ip: req.ip, ads: [ ads[0]._id, ads[1]._id ] }, (err, impression) => {
 				if (err){
 					console.error(err);
 					res.json(err);
@@ -89,7 +89,7 @@ router.get('/:username', function(req, res) {
 	console.log('Received request with username ' + req.params.username);
 	Ad.aggregate([{ $sample: { size: 2 } }]).exec(function(err, ads){
 		Club.findOne({username: req.params.username}, function(err, club){
-			Impression.create({ sess: req.session.id, ads: [ ads[0]._id, ads[1]._id ], page: club._id }, (err, impression) => {
+			Impression.create({ ip: req.ip, ads: [ ads[0]._id, ads[1]._id ], page: club._id }, (err, impression) => {
 				if (err){
 					console.error(err);
 					res.json(err);
