@@ -7,8 +7,16 @@ const UserSchema = new mongoose.Schema({
 		required: true,
 		unique: true
 	},
-	interests: [{type: String, unique: true}],
-	subscriptions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Club', unique: true }]
+	interests: {
+		type: [String],
+		default: [],
+		required: true
+	},
+	subscriptions: {
+		type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Club' }],
+		default: [],
+		required: true
+	}
 },
 {collection: 'users'});
 
