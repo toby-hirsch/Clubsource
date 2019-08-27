@@ -14,6 +14,10 @@ const AdSchema = new mongoose.Schema({
 		type: String,
 		required: true,
 	},
+	name: {
+		type: String,
+		required: true
+	}
 },
 {collection: 'ads'});
 
@@ -23,7 +27,8 @@ function validateAd(ad){
 	const schema = {
 		img: Joi.binary().encoding('base64'),
 		url: Joi.string().uri(),
-		prefix: Joi.string()
+		prefix: Joi.string(),
+		name: Joi.string()
 	};
 	
 	var result = joi.validate(ad, schema);

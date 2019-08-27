@@ -18,7 +18,7 @@ router.post('/upload', (req, res, next) => {
 	//let data = JSON.parse(req.body);
 	let data = req.body.img.split(',');
 	//console.log(data.substring(0, 50));
-	Ad.create({img: Buffer.from(data[1], 'base64'), prefix: data[0], url: req.body.url}, (err, ad) => {
+	Ad.create({img: Buffer.from(data[1], 'base64'), prefix: data[0], url: req.body.url, name: req.body.name}, (err, ad) => {
 		let encoding = ad.img.toString('base64');
 		res.json({
 			prefix: ad.prefix,

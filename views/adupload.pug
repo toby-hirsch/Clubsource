@@ -21,14 +21,18 @@ append content
 	form(action='adupload', method='post', id='adform')
 		.container-fluid
 			.row
-				.col-sm-6
+				.col-sm-4
 					label(for='img') Choose an image
 					br
 					input(type='file', accept='image/*' onchange='imgchange(event)', name='img', id='imginput', required)
-				.col-sm-6
+				.col-sm-4
 					label(for='url') Your website:
 					br
 					input(type='url', name='url' onchange='linkchange(this.value)', id='urlinput', required)
+				.col-sm-4
+					label(for='url') Ad name:
+					br
+					input(type='text', name='name', id='nameinput', required)
 		br
 		hr
 		p.text-center Your Ad

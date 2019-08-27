@@ -38,7 +38,8 @@ $('#adform').submit(e => {
 			console.log(imgdata);
 			const data = {
 				img: imgdata,
-				url: $('#urlinput').val()
+				url: $('#urlinput').val(),
+				name: $('#nameinput').val()
 			}
 			$.ajax({
 				url: '/myclub/ads/upload',
