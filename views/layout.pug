@@ -17,9 +17,27 @@ html(lang='en')
 			link(rel='stylesheet', href='/stylesheets/body.css', type='text/css')
 	body
 		block content
+			#closewrap
+				button#closebtn
+				img#close(src='/images/grayx.png')
+			#fullnav
+				.outer
+					.inner
+						#fullnavcont.d-inline-block
+							if accType && accType.user
+								a.fullnavlink(href='/profile') Profile
+								br
+							if accType && accType.club
+								a.fullnavlink(href='/dashboard') Dashboard
+								br
+							if accType && (accType.student || accType.club)
+								a.fullnavlink(href='/accounts/logout') Log Out
+							else
+								a.fullnavlink(href='/accounts/login') Log In
 			.navbar
 				.navcont.navleft
 					a.mainlogonav(href='/') clubsource
+				.triangledown#navdrop
 				.navcont.navright
 					- console.log('account type in pug: ');
 					- console.log(accType);
@@ -39,4 +57,4 @@ html(lang='en')
 			script(src="https://code.jquery.com/jquery-3.4.1.js", integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=", crossorigin="anonymous")
 			script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js", integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1", crossorigin="anonymous")
 			script(src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js", integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM", crossorigin="anonymous")
-		
+			script(src='/javascripts/navbar.js')
