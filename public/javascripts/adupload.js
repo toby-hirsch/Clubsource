@@ -6,7 +6,7 @@ const imgchange = (e) => {
 	
 	const img = e.target.files[0];
 	const options = {
-		maxSizeMB: 0.1,
+		maxSizeMB: 1,
 		maxWidthOrHeight: 1000
 	}
 	console.log(`originalFile size ${img.size / 1024 / 1024} MB`);

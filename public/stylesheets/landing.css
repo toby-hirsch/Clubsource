@@ -59,18 +59,30 @@ h3{
 .infocontainer{
 	background-color: hsla(195, 100%, 70%, 0.8);
 	padding: 50px;
-	margin: 30px 0;
+	margin-top: 30px;
 }
 .title{
 	font-family: 'Montserrat', 'Open Sans', 'Sans Serif';
 	font-weight: 500;
 	text-transform: uppercase;
 	margin-top: 100px;
-	font-size: 6em;
+	font-size: calc(2em + 5vw);
 	color: white;
 	text-align: center;
 	letter-spacing: 0.1em;
 }
 .title span{
 	color: hsl(195, 100%, 50%);
+}
+
+@media only screen and (max-width: 750px){
+	.title{
+		font-size: calc(1em + 7vw);
+	}
+	h3{
+		font-size: calc(0.5em + 3vw);
+	}
+	.infocontainer{
+		padding: 50px 20px;
+	}
 }
