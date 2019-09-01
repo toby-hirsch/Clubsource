@@ -21,7 +21,11 @@ router.get('/getdefault', function(req, res){
 		if (req.user){
 			User.findOne({email: req.user}, {interests: true}, function(err, user){
 				if (user && user.interests)
-					Club.find({$text: {$search: user.interests.join(' '), $language: 'english'}}, {name: true, username: true, tags: true}, function(err, clubs){
+					Club.find({$text: {$search: user.interests.join(' '), $language: 'english'}}, { name: true, username: true, tags: true, score: { $meta: 'textScore' } }, function(err, clubs){
+						for (club of clubs){
+							club.score += club.popularity;
+						}
+						clubs.sort(sortclubs);
 						res.json({
 							clubs: clubs,
 							ads: ads,
@@ -34,7 +38,7 @@ router.get('/getdefault', function(req, res){
 			});
 		}
 		else 
-			Club.find({}, {username: true, name: true, tags: true}, function(err, clubs){
+			Club.find({ }, { username: true, name: true, tags: true }, { sort: { popularity: -1 } }, function(err, clubs){
 				console.log(clubs);
 				res.json({
 					clubs: clubs,
@@ -48,17 +52,42 @@ router.get('/getdefault', function(req, res){
 });
 
 
+const insertsorted = (arr, item) => {
+	arr.push(item);
+	let len = arr.length;
+	for (let i = len - 1; i > 0; i--){
+		if (arr[i].score < arr[i-1].score)
+			return;
+		swap(arr, i, i-1);
+	}
+	return;
+}
+
+const swap = (arr, i, j) => {
+	let temp = arr[i];
+	arr[i] = arr[j];
+	arr[j] = temp;
+}
+
+const sortclubs = (a, b) => {
+	return a._doc.score > b._doc.score ? -1 : 1;
+}
+
 router.get('/search/:search', function(req, res) {
 	//console.log(req.params.search);
 	var parsed = qs.parse(req.params.search);
 	//parsed.shift();
 	//console.log(parsed);
 	
-	Club.find({$text: {$search: parsed.search, $language: 'english'}}, {name: true, username: true, tags: true}).limit(10).exec(function(err, clubs) {
+	Club.find({$text: {$search: parsed.search, $language: 'english'}}, { name: true, username: true, tags: true, score: { $meta: 'textScore' } }).limit(10).exec(function(err, clubs) {
+		//clubs.sort({ score: -1 });
 		//console.log(clubs);
 		let arr = [];
-		for (club of clubs)
-			arr.push(club);
+		for (club of clubs){
+			club.score += club.popularity;
+		}
+		clubs.sort(sortclubs);
+		console.log(clubs);
 		Ad.aggregate([{ $sample: { size: 2 } }]).exec(function(err, ads){
 			/*for (ad of ads){
 				ad.img = ad.img.toString('base64');
@@ -74,7 +103,7 @@ router.get('/search/:search', function(req, res) {
 				console.log(impression);
 			});
 			res.json({
-				clubs: arr,
+				clubs: clubs,
 				ads: ads
 			});
 			
@@ -88,7 +117,7 @@ router.get('/:username', function(req, res) {
 	var username = req.params.club;
 	console.log('Received request with username ' + req.params.username);
 	Ad.aggregate([{ $sample: { size: 2 } }]).exec(function(err, ads){
-		Club.findOne({username: req.params.username}, function(err, club){
+		Club.findOneAndUpdate({ username: req.params.username }, { $inc: { popularity: 0.1 } }, function(err, club){
 			Impression.create({ ip: req.ip, ads: [ ads[0]._id, ads[1]._id ], page: club._id }, (err, impression) => {
 				if (err){
 					console.error(err);

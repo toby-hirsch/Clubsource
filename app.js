@@ -14,9 +14,12 @@ const MongoStore = require('connect-mongo')(session);
 const okta = require("@okta/okta-sdk-nodejs");
 const ExpressOIDC = require("@okta/oidc-middleware").ExpressOIDC;
 const mongoose = require('mongoose');
+const { Club } = require('./schemas/club');
 const passport = require('passport');
 const gauth = require('./googleauth');
 const sslredirect = require('heroku-ssl-redirect');
+
+const popularitydecay = 0.999;
 
 let baseurl = 'https://greenwich.myclubsource.com';
 
@@ -29,6 +32,14 @@ mongoose.connect('mongodb+srv://admin:Toby0188@clubs-rxh79.mongodb.net/clubsourc
 	{useNewUrlParser: true, useFindAndModify: false, useCreateIndex: true}, function(err){
 	if (err) throw err; //Change this before publishing
 	console.log('Connected to MongoDB');
+	setInterval(() => {
+		Club.updateMany({}, { $mul: { popularity: popularitydecay } }, (err, clubs) => {
+			if (err)
+				console.error(err)
+			else
+				console.log('updated popularity of clubs');
+		});
+	}, 3600000);
 });
 
 gauth(passport);

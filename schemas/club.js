@@ -23,6 +23,11 @@ const ClubSchema = new mongoose.Schema({
 		required: true
 	},
 	tags: String,
+	popularity: {
+		type: Number,
+		required: true,
+		default: 0
+	},
 	balance: {
 		type: Number,
 		required: true,
