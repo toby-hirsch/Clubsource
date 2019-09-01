@@ -30,14 +30,17 @@ html(lang='en')
 							if accType && accType.club
 								a.fullnavlink(href='/dashboard') Dashboard
 								br
+							a.fullnavlink(href='/clubs') Browse Clubs
+							br
 							if accType && (accType.student || accType.club)
 								a.fullnavlink(href='/accounts/logout') Log Out
 							else
 								a.fullnavlink(href='/accounts/login') Log In
 			.navbar
 				.navcont.navleft
-					a.mainlogonav(href='/') clubsource
-				.triangledown#navdrop
+					.position-relative.d-inline-block
+						a.mainlogonav(href='/') clubsource
+						.triangledown#navdrop
 				.navcont.navright
 					- console.log('account type in pug: ');
 					- console.log(accType);

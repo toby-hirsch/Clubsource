@@ -101,8 +101,8 @@ body{
 #navdrop{
 	display: none;
 	position: absolute;
-	top: 42px;
-	left: calc(5% + 275px);
+	bottom: 8px;
+	right: -20px;
 }
 .navright{right: 5%}
 .navleft{left: 5%}
@@ -156,7 +156,6 @@ body{
 .triangledown{
 	width: 0;
 	height: 0;
-	margin-bottom: 30px;
 	display: inline-block;
 	border-left: 8px solid transparent;
 	border-right: 8px solid transparent;
@@ -182,11 +181,52 @@ body{
 	vertical-align: middle;
 }
 
-@media only screen and (max-width: 575.98px){
+@media only screen and (max-width: 1199.98px){
+	.navleft{
+		left: 3%;
+	}
+	.navright{
+		right: 3%;
+	}
+	.navlink{
+		margin-right: 0;
+	}
+}
+
+@media only screen and (max-width: 991.98px){
+	.navlink{
+		font-size: 18px;
+		margin-left: 40px;
+	}
+	.mainlogonav{
+		font-size: 40px;
+		line-height: 40px;
+		margin-bottom: -2px;
+	}
+	.navleft{
+		left: 2%;
+	}
+	.navright{
+		right: 2%;
+	}
+	
+}
+
+@media only screen and (max-width: 767.98px){
 	#navdrop{
 		display: inline-block;
 	}
 	.navright{
 		display: none;
+	}
+	.navleft{
+		left: 5%;
+	}
+	.title{
+		font-size: 2.8em;
+	}
+	.mainlogonav{
+		font-size: 48px;
+		line-height: 48px;
 	}
 }
