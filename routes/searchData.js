@@ -23,7 +23,7 @@ router.get('/getdefault', function(req, res){
 				if (user && user.interests)
 					Club.find({$text: {$search: user.interests.join(' '), $language: 'english'}}, { name: true, username: true, tags: true, score: { $meta: 'textScore' } }, function(err, clubs){
 						for (club of clubs){
-							club.score += club.popularity;
+							club.score *= club.popularity;
 						}
 						clubs.sort(sortclubs);
 						res.json({
@@ -84,7 +84,7 @@ router.get('/search/:search', function(req, res) {
 		//console.log(clubs);
 		let arr = [];
 		for (club of clubs){
-			club.score += club.popularity;
+			club.score *= club.popularity;
 		}
 		clubs.sort(sortclubs);
 		console.log(clubs);

@@ -33,6 +33,7 @@ mongoose.connect('mongodb+srv://admin:Toby0188@clubs-rxh79.mongodb.net/clubsourc
 	if (err) throw err; //Change this before publishing
 	console.log('Connected to MongoDB');
 	setInterval(() => {
+		//TODO: recalculate popularitydecay here based on average popularity to keep it in the right range
 		Club.updateMany({}, { $mul: { popularity: popularitydecay } }, (err, clubs) => {
 			if (err)
 				console.error(err)
