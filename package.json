@@ -35,6 +35,5 @@
     "quill-delta-to-html": "^0.10.9",
     "quill-image-compress": "^1.0.1",
     "quill-image-resize-module": "^3.0.0"
-  },
-  "devDependencies": {}
+  }
 }
