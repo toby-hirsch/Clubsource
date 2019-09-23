@@ -3,11 +3,16 @@ const router = express.Router();
 
 // Log a user out
 router.get("/logout", (req, res) => {
-	req.logout();
-	req.session = null;
-	req.user = null;
-	req.clubowner = null;
-	res.redirect("/");
+	console.log('**************************************************************************INITIATING LOGOUT************************************************************');
+	req.session.destroy((err) => {
+		if(err) return next(err)
+
+		req.logout()
+		console.log('session');
+		console.log(req.session);
+		res.redirect('/');
+	})
+	
 });
 
 router.get('/type', (req, res) => {

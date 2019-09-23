@@ -99,7 +99,8 @@ app.use((req, res, next) => {
 	console.log('**********************************club in session*****************************');
 	console.log(req.session.club);*/
 	res.locals.accType = {};
-
+	console.log('session');
+	console.log(req.session);
 	if (req.session.user){ //Google OAuth
 		req.user = req.session.user;
 		res.locals.user = req.user;

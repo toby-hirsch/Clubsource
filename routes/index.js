@@ -7,6 +7,8 @@ var app = require('../app.js');
 /* GET home page. */
 router.get('/', function(req, res, next) {
 	//res.render('index', { title: 'Express' });
+	console.log('session');
+	console.log(req.session);
 	res.render('clublandingpage');
 });
 
