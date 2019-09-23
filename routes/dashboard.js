@@ -4,7 +4,15 @@ const {Club, validate} = require('../schemas/club');
 const { Impression } = require('../schemas/impression');
 const Converter = require('quill-delta-to-html').QuillDeltaToHtmlConverter;
 const sizeof = require('object-sizeof');
+const paypal = require('paypal-rest-sdk');
 
+paypal.configure({
+	'mode': 'live',
+	'client_id': 'AcoWixvLJXsvRxSjpocT-gLqsvuKXbOjykQgpaoIcIYxFI2Hoh8AXmMbRZBTWlSQWC0ppUnV9YgZN8vu',
+	'client_secret': 'EBtPtChuboTlJFeZqkhTwotUw0FWc_J8S4fUVoXIBRzqyWvkF2NKRcirtGHEy3f4pow0jAVtZ2EhImhr'
+});
+
+let payoutid = 0;
 
 const invalidUsernameError = 'Please enter a valid username. Valid usernames should be at least five characters and not include any white space.';
 const duplicateUsernameError = 'Username taken';
@@ -37,8 +45,6 @@ router.get('/', (req, res) => {
 						countlast++;
 					}
 					else {
-						console.log(uniquethis);
-						console.log(view.ip);
 						if (uniquethis.indexOf(view.ip)===-1)
 							uniquethis.push(view.ip);
 						countthis++;
@@ -139,6 +145,36 @@ router.post('/edit', (req, res, next) => {
 			return;
 		}
 		res.redirect('../../clubs/' + req.body.username); 
+	});
+});
+
+
+router.post('/withdraw', (req, res) => {
+	const id = Math.random().toString(36).substring(9);
+	const payment = {
+		'sender_batch_header': {
+			'sender_batch_id': id,
+			'email_subject': 'Clubsource Payment'
+		},
+		'items': [
+			{
+				'recipient_type': 'EMAIL',
+				'amount': {
+					'value': 0.01,
+					'currency': 'USD'
+				},
+				'receiver': req.body.email,
+				'sender_item_id': payoutid++,
+				'note': 'Thank you for using Clubsource!'
+			}
+		]
+	};
+	
+	paypal.payout.create(payment, 'false', (err, payout) => {
+		if (err)
+			console.log(err.response);
+		else
+			res.json({ payout: payout });
 	});
 });
 

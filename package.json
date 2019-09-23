@@ -30,6 +30,7 @@
     "object-sizeof": "^1.4.0",
     "passport": "^0.4.0",
     "passport-google-oauth2": "^0.2.0",
+    "paypal-rest-sdk": "^1.8.1",
     "pug": "2.0.0-beta11",
     "qs": "^6.7.0",
     "quill-delta-to-html": "^0.10.9",

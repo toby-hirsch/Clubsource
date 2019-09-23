@@ -5,6 +5,16 @@ block variables
 	
 append styles
 	link(rel='stylesheet' href='/stylesheets/clubs.css' type='text/css')
+	style.
+		#withdrawinput{
+			width: 400px;
+			margin: 5px;
+			padding: 2px;
+		}
+		.withdraw{
+			text-align: center;
+			margin-bottom: 30px;
+		}
 
 append content
 	.row.no-gutters
@@ -54,4 +64,14 @@ append content
 		hr
 		.balance
 			h2= 'Your Balance: $' + club.balance
-			p.text-center Each month, you will receive money based on how many people view your page. You can send that money to a PayPal account here.
+			p.text-center 
+				| Each month, you will receive money based on how many people view your page. You can send that money to a PayPal account here. 
+				| Input the email associated with your PayPal account below.
+			.withdraw
+				input(type='text', placeholder='PayPal Email')#withdrawinput
+				br
+				button(disabled=!club.balance).bigbutton#withdraw Withdraw
+
+append scripts
+	script(src='/javascripts/dashboard.js')
+			
