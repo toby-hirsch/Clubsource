@@ -6,7 +6,7 @@ router.get("/logout", (req, res) => {
 	req.logout();
 	req.session = null;
 	req.user = null;
-	req.club = null;
+	req.clubowner = null;
 	res.redirect("/");
 });
 
