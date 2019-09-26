@@ -8,8 +8,6 @@ router.get("/logout", (req, res) => {
 		if(err) return next(err)
 
 		req.logout()
-		console.log('session');
-		console.log(req.session);
 		res.redirect('/');
 	})
 	
