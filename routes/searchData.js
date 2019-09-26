@@ -16,7 +16,9 @@ router.get('/getdefault', function(req, res){
 				console.error(err);
 				res.json(err);
 			}
-			console.log(impression);
+			console.log('ip: ' + req.ip);
+			console.log('ips:');
+			console.log(req.ips);
 		});
 		if (req.user){
 			User.findOne({email: req.user}, {interests: true}, function(err, user){
