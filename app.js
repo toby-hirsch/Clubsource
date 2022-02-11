@@ -1,10 +1,3 @@
-//Dev URL: https://dev-595998.okta.com
-//Client ID: 0oaqbdltip5hVE727356
-//Client secret: Q4xccPTsw65bTNpO3FMq_WrWqLsGdyqzCR1a1BXr
-//Token value: 00weFwwSEVnZ2zF6ykgKA5lpRNkUcEipIvvQ13P0MZ
-
-
-
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
@@ -18,6 +11,7 @@ const { Club } = require('./schemas/club');
 const passport = require('passport');
 const gauth = require('./googleauth');
 const sslredirect = require('heroku-ssl-redirect');
+const secret = require('./secret.js')
 
 const popularitydecay = 0.999;
 
@@ -52,7 +46,7 @@ var oktaClient = new okta.Client({
 const oidc = new ExpressOIDC({
   issuer: "https://dev-595998.okta.com/oauth2/default",
   client_id: '0oaqbdltip5hVE727356',
-  client_secret: 'Q4xccPTsw65bTNpO3FMq_WrWqLsGdyqzCR1a1BXr',
+  client_secret: secret.okta,
   redirect_uri: baseurl + '/myclub/callback',
   scope: "openid profile",
   routes: {
